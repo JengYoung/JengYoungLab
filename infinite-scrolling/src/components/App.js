@@ -10,26 +10,60 @@ export default function App({ $target }) {
 
   this.state = {
     limit: 5,
-    start: 0,
+    nextStart: 0,
     photos: [],
+    totalCnt: 0,
+    isLoading: false,
   };
+
   const photoList = new PhotoList({
     $target,
-    initialState: this.state.photos,
+    initialState: {
+      isLoading: this.state.isLoading,
+      photos: this.state.photos,
+    },
+    onScrollEnded: async () => {
+      await fetchPhotos();
+    },
   });
 
   this.setState = (nextState) => {
     this.state = nextState;
-    photoList.setState(nextState.photos);
-  };
-
-  const fetchPhotos = async () => {
-    const photos = await request(`/cat-photos?_limit=5&_start=0`);
-    this.setState({
-      ...this.state,
-      photos,
+    photoList.setState({
+      isLoading: this.state.isLoading,
+      photos: nextState.photos,
+      totalCnt: this.state.totalCnt,
     });
   };
 
-  fetchPhotos();
+  const fetchPhotos = async () => {
+    this.setState({
+      ...this.state,
+      isLoading: true,
+    });
+    const { limit, nextStart } = this.state;
+
+    const photos = await request(
+      `/cat-photos?_limit=${limit}&_start=${nextStart}`
+    );
+    this.setState({
+      ...this.state,
+      nextStart: nextStart + limit,
+      photos: [...this.state.photos, ...photos],
+      isLoading: false,
+    });
+  };
+
+  const initialize = async () => {
+    const totalCnt = await request("/cat-photos/count");
+
+    this.setState({
+      ...this.state,
+      totalCnt,
+    });
+
+    await fetchPhotos();
+  };
+
+  initialize();
 }
