@@ -12,6 +12,7 @@ body {
     padding: 0;
     .photos__photo {
       list-style: none;
+      min-height: 500px;
       img {
         width: 100%;
       }
