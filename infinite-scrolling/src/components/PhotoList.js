@@ -30,23 +30,60 @@ export default function PhotoList({
     (entries) => {
       entries.forEach((entry) => {
         const { isLoading, totalCnt, photos } = this.state;
-        if (entry.isIntersecting && !isLoading && photos.length < totalCnt) {
-          onScrollEnded();
+        // if (entry.isIntersecting && !isLoading && photos.length < totalCnt) {
+        //   console.log("entries: ", entry);
+        //   onScrollEnded();
+        //   console.log("nowObserver: ", nowObserver.target);
+        //   console.log(entry.target);
+        //   observer.unobserve(entry.target);
+        //   console.log("afterObserver: ", nowObserver);
+        // }
+        console.log("과연", document.body.offsetHeight, entry.isIntersecting);
+        if (entry.isIntersecting && Math.floor(entry.intersectionRatio)) {
+          console.log(document.body.offsetHeight);
+          console.log(entry.boundingClientRect);
+          console.log(entry.target);
+          observer.unobserve(entry.target);
+          // onScrollEnded();
+          if (!isLoading && photos.length < totalCnt) onScrollEnded();
         }
       });
     },
     {
-      threshold: 0.8,
+      threshold: 1,
     }
   );
-  let $lastLi = null;
+  // const observer = new IntersectionObserver(
+  //   (entries, currentObserver) => {
+  //     entries.forEach((entry) => {
+  //       const { isLoading, totalCnt, photos } = this.state;
+  //       // if (entry.isIntersecting && !isLoading) {
+  //       //   currentObserver.unobserve(entry.target);
+  //       //   console.log(entry.target);
+  //       //   if (!isLoading) {
+  //       //     console.log("나 풀려써~", isLoading);
+  //       //     if (totalCnt > photos.length) onScrollEnded();
+  //       //   }
+  //       // }
+  //       if (entry.isIntersecting) {
+  //         console.log(entry.target);
+  //         observer.unobserve(entry.target);
+  //         console.log("after: ", observer);
+  //         if (!isLoading && photos.length < totalCnt) onScrollEnded();
+  //       }
+  //     });
+  //   },
+  //   {
+  //     threshold: 0.8,
+  //   }
+  // );
 
   this.setState = (nextState) => {
     this.state = nextState;
-    console.log(this.state);
     this.render();
   };
   this.render = () => {
+    // 초기화 상태 지정
     if (!isInit) {
       $photoList.innerHTML = `
         <ul class="${photosClassName}">
@@ -55,7 +92,7 @@ export default function PhotoList({
       `;
       isInit = true;
     }
-
+    if (!isInit) return;
     const { isLoading, photos } = this.state;
     const $photos = $photoList.querySelector(`.${photosClassName}`);
     photos.forEach((photo) => {
@@ -72,12 +109,9 @@ export default function PhotoList({
         $photos.appendChild($li);
       }
     });
-    const $nextLi = $photoList.querySelector("li:last-child");
-    if ($nextLi !== null) {
-      if ($lastLi !== null) {
-        observer.unobserve($lastLi);
-      }
-      $lastLi = $nextLi;
+    const $lastLi = $photoList.querySelector("li:last-child");
+    if ($lastLi !== null) {
+      // console.log("읭????", $lastLi);
       observer.observe($lastLi);
     }
   };

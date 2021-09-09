@@ -4,7 +4,7 @@ import { request } from "@/apis/request";
 export default function App({ $target }) {
   console.log($target);
   const $h1 = document.createElement("h1");
-  $h1.textContent = "울 냥이덜... 집사가 oH77ㅕ...⭐";
+  $h1.textContent = "ul 냥ol dir... LH7r oH77ㅕ...⭐";
   $h1.style.textAlign = "center";
   $target.appendChild($h1);
 
@@ -23,6 +23,7 @@ export default function App({ $target }) {
       photos: this.state.photos,
     },
     onScrollEnded: async () => {
+      console.log("상태 변경에 의한 여러 번 콜백 호출!", this.state);
       await fetchPhotos();
     },
   });
@@ -43,6 +44,7 @@ export default function App({ $target }) {
     });
     const { limit, nextStart } = this.state;
 
+    // if (nextStart === this.nextStart) return;
     const photos = await request(
       `/cat-photos?_limit=${limit}&_start=${nextStart}`
     );
