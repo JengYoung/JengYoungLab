@@ -1,6 +1,6 @@
 import names from "@/utils/classNames";
 import { DIRECTORY_TYPE } from "@/utils/constants";
-export default function Nodes({ $target, initialState, onClick }) {
+export default function Nodes({ $target, initialState, onClick, onPrevClick }) {
   const DIR_APP_PREV_SRC = process.env.DIR_APP_PREV_SRC;
   const DIR_APP_FILE_SRC = process.env.DIR_APP_FILE_SRC;
   const DIR_APP_DIR_SRC = process.env.DIR_APP_DIR_SRC;
@@ -65,7 +65,7 @@ export default function Nodes({ $target, initialState, onClick }) {
     if (node) {
       onClick(node);
     } else {
-      alert("올바르지 않은 노드입니다.");
+      onPrevClick();
     }
   });
 }
