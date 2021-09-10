@@ -3,6 +3,7 @@ import { request } from "@/apis/request";
 import { DIRECTORY_TYPE, FILE_TYPE } from "@/utils/constants";
 import ImageViewer from "@/components/imageViewer";
 import Loading from "@/components/Loading";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function App({ $target }) {
   const API_END_POINT = process.env.API_END_POINT;
@@ -16,6 +17,19 @@ export default function App({ $target }) {
 
   const loading = new Loading({
     $target,
+  });
+
+  const breadcrumb = new Breadcrumb({
+    $target,
+    initialState: this.state.paths,
+    onClick: async (id) => {
+      const pathIndex = this.state.paths.findIndex((path) => path.id === id);
+      this.setState({
+        ...this.state,
+        paths: id ? this.state.paths.slice(0, pathIndex + 1) : [],
+      });
+      await fetchNodes(id);
+    },
   });
 
   const nodes = new Nodes({
@@ -80,9 +94,12 @@ export default function App({ $target }) {
     });
 
     loading.setState(this.state.isLoading);
+
+    breadcrumb.setState(this.state.paths);
   };
 
   const fetchNodes = async (id) => {
+    console.log("들가써, id", id);
     this.setState({
       ...this.state,
       isLoading: true,

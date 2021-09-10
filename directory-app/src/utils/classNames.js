@@ -4,6 +4,7 @@ const names = {
 
   _imageViewer: "ImageViewer",
   _breadcrumb: "Breadcrumb",
+  _breadcrumbItem: "Breadcrumb__item",
 
   _modal: "Modal",
 };
