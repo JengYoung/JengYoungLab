@@ -1,12 +1,81 @@
+import getKeyword from "@/apis/getKeyword";
+import getSearch from "@/apis/getSearch";
 import Header from "@/components/Header";
+import SuggestedKeywords from "@/components/SuggestedKeywords";
+import SearchResults from "@/components/SearchResults";
+import debounce from "@/utils/debounce";
 
 export default function App({ $target }) {
+  this.state = {
+    keyword: "",
+    keywords: [],
+    imgResults: [],
+  };
+
+  this.setState = (nextState) => {
+    this.state = nextState;
+    console.log(this.state);
+    if (this.state.keyword !== nextState.keyword) {
+      header.setState({
+        keyword: this.state.keyword,
+      });
+    }
+    suggestedKeywords.setState({
+      keywords: this.state.keywords,
+    });
+    if (this.state.imgResults.length > 0) {
+      searchResults.setState(this.state.imgResults);
+    }
+  };
   const header = new Header({
     $target,
-    onKeywordInput: (keyword) => {
+    initialState: {
+      keyword: this.state.keyword,
+    },
+    onKeywordInput: debounce(async (keyword) => {
       if (keyword.trim().length > 1) {
-        console.log(keyword);
+        const keywords = await getKeyword(keyword);
+
+        this.setState({
+          ...this.state,
+          keyword,
+          keywords,
+        });
+        console.log(keywords);
       }
+    }, 300),
+    onEnter: () => {
+      fetchCatsImg();
     },
   });
+
+  const suggestedKeywords = new SuggestedKeywords({
+    $target,
+    initialState: {
+      keywords: this.state.keywords,
+      cursor: -1,
+    },
+    onKeywordSelect: (keyword) => {
+      this.setState({
+        ...this.state,
+        keyword,
+        keywords: [],
+      });
+      fetchCatsImg();
+    },
+  });
+
+  const searchResults = new SearchResults({
+    $target,
+    initialState: this.state.imgResults,
+  });
+  const fetchCatsImg = async () => {
+    const { data } = await getSearch(this.state.keyword);
+
+    this.setState({
+      ...this.state,
+      imgResults: data,
+      keywords: [],
+    });
+  };
 }
