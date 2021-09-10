@@ -14,6 +14,7 @@ export default function Keyword({
 
   this.state = initialState;
   this.setState = (nextState) => {
+    console.log("inKeyword: ", this.state, nextState);
     this.state = nextState;
     $keyword.value = this.state.value;
   };

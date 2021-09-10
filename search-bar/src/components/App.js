@@ -1,4 +1,5 @@
 import getKeyword from "@/apis/getKeyword";
+import { getItem, setItem } from "@/utils/storage";
 import getSearch from "@/apis/getSearch";
 import Header from "@/components/Header";
 import SuggestedKeywords from "@/components/SuggestedKeywords";
@@ -12,14 +13,19 @@ export default function App({ $target }) {
     imgResults: [],
   };
 
+  this.cache = getItem("keywords_cache", {});
+
   this.setState = (nextState) => {
     this.state = nextState;
-    console.log(this.state);
-    if (this.state.keyword !== nextState.keyword) {
-      header.setState({
-        keyword: this.state.keyword,
-      });
-    }
+    console.log(this.state.keyword, nextState.keyword);
+    header.setState({
+      keyword: this.state.keyword,
+    });
+    // if (this.state.keyword !== nextState.keyword) {
+    //   header.setState({
+    //     keyword: this.state.keyword,
+    //   });
+    // }
     suggestedKeywords.setState({
       keywords: this.state.keywords,
     });
@@ -34,14 +40,21 @@ export default function App({ $target }) {
     },
     onKeywordInput: debounce(async (keyword) => {
       if (keyword.trim().length > 1) {
-        const keywords = await getKeyword(keyword);
+        let keywords = null;
+
+        if (this.cache[keyword]) {
+          keywords = this.cache[keyword];
+        } else {
+          keywords = await getKeyword(keyword);
+          this.cache[keyword] = keywords;
+          setItem("keywords_cache", this.cache);
+        }
 
         this.setState({
           ...this.state,
           keyword,
           keywords,
         });
-        console.log(keywords);
       }
     }, 300),
     onEnter: () => {

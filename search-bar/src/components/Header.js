@@ -10,19 +10,8 @@ export default function Header({
   const { _header } = names;
   const $header = document.createElement("header");
   $header.classList.add(_header);
-
   $target.appendChild($header);
 
-  this.state = initialState;
-
-  this.setState = (nextState) => {
-    if (this.state.keyword !== nextState.keyword) {
-      this.state = nextState;
-      keyword.setState({
-        value: this.state.keyword,
-      });
-    }
-  };
   const $title = document.createElement("h1");
   $title.textContent = "🐈고양이 사진 검색기🔍";
   $header.appendChild($title);
@@ -35,4 +24,16 @@ export default function Header({
     onKeywordInput,
     onEnter,
   });
+
+  this.state = initialState;
+
+  this.setState = (nextState) => {
+    console.log("inHeader", this.state.keyword, nextState.keyword);
+    if (this.state.keyword !== nextState.keyword) {
+      this.state = nextState;
+      keyword.setState({
+        value: this.state.keyword,
+      });
+    }
+  };
 }
