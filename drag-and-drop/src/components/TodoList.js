@@ -56,15 +56,14 @@ export default function TodoList({ $target, initialState, onDrop, onRemove }) {
   });
 
   $todoList.addEventListener("drop", (e) => {
+    console.log(e);
     e.preventDefault();
     const todoId = JSON.parse(e.dataTransfer.getData(DATA_TYPE_ID)).id;
 
     // not now todo => alert to super component
     const { todos } = this.state;
 
-    if (!todos.find(({ _id }) => _id === todoId)) {
-      onDrop(todoId);
-    }
+    if (!todos.find(({ _id }) => _id === todoId)) onDrop(todoId);
   });
 
   $todoList.addEventListener("click", (e) => {

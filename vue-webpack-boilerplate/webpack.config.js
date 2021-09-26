@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { VueLoaderPlugin } = require('vue-loader');
 
@@ -35,13 +37,27 @@ module.exports = (_, { mode }) => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      template: 'index.html',
+      hash: true,
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { 
+          from: path.join(__dirname, '/src/assets/*'),
+          to: path.join(__dirname, '/dist/public/'),
+          toType: 'dir'
+        }
+      ]
+    }),
+    new CleanWebpackPlugin(),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'main.css',
+    }),
   ],
   devServer: {
     hot: true,
     historyApiFallback: true,
   },
+  devtool: 'cheap-eval-source-map'
 })

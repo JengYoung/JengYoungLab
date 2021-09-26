@@ -1,59 +1,59 @@
-const path = require('path');
-const HtmlPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const Dotenv = require('dotenv-webpack');
+const path = require("path");
+const HtmlPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const Dotenv = require("dotenv-webpack");
 
-module.exports = env => ({
+module.exports = (env) => ({
   resolve: {
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-    extensions: ['.js'],
+    modules: [path.resolve(__dirname, "src"), "node_modules"],
+    extensions: [".js"],
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      "@": path.resolve(__dirname, "src"),
     },
   },
-  entry: ['@babel/polyfill', './src/index.js', './src/sass/main.scss'],
+  entry: ["@babel/polyfill", "./src/index.js", "./src/sass/main.scss"],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
+    filename: "bundle.js",
   },
   devServer: {
-    static: './dist',
+    static: "./dist",
     hot: true,
     historyApiFallback: {
-      index: '/index.html',
+      index: "/index.html",
     },
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        include: [path.resolve(__dirname, 'src')],
+        include: [path.resolve(__dirname, "src")],
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-class-properties'],
+            presets: ["@babel/preset-env"],
+            plugins: ["@babel/plugin-proposal-class-properties"],
           },
         },
       },
       {
         test: /\.png$/, // .png 확장자로 마치는 모든 파일
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          publicPath: './dist/', // prefix를 아웃풋 경로로 지정
-          name: '[name].[ext]?[hash]', // 파일명 형식
+          publicPath: "./dist/", // prefix를 아웃풋 경로로 지정
+          name: "[name].[ext]?[hash]", // 파일명 형식
         },
       },
       {
         test: /\.png$/,
         use: {
-          loader: 'url-loader', // url 로더를 설정한다
+          loader: "url-loader", // url 로더를 설정한다
           options: {
-            publicPath: './dist/', // file-loader와 동일
-            name: '[name].[ext]?[hash]', // file-loader와 동일
+            publicPath: "./dist/", // file-loader와 동일
+            name: "[name].[ext]?[hash]", // file-loader와 동일
             limit: 10000, // 10kb 미만 파일만 data url로 처리
           },
         },
@@ -61,9 +61,9 @@ module.exports = env => ({
       {
         test: /\.s?css$/,
         use: [
-          'style-loader', // creates style nodes from JS strings
-          'css-loader', // translates CSS into CommonJS
-          'sass-loader', // compiles Sass to CSS, using Node Sass by default
+          "style-loader", // creates style nodes from JS strings
+          "css-loader", // translates CSS into CommonJS
+          "sass-loader", // compiles Sass to CSS, using Node Sass by default
         ],
         exclude: /node_modules/,
       },
@@ -71,15 +71,15 @@ module.exports = env => ({
   },
   plugins: [
     new Dotenv({
-      path: `${env.client ? 'client' : 'server'}.env`,
+      path: `${env.client ? "client" : "server"}.env`,
     }),
     new HtmlPlugin({
-      template: './index.html',
+      template: "./index.html",
       hash: true,
     }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({ filename: 'css/style.css' }),
+    new MiniCssExtractPlugin({ filename: "css/style.css" }),
   ],
-  devtool: 'source-map',
-  mode: 'none',
+  devtool: "source-map",
+  mode: "none",
 });
