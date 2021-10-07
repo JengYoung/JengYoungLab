@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@next"></script>
+  <title>Document</title>
+</head>
+<body>
+  <style>
+  </style>
+  <div id="app">
+    <select v-model="selected">
+      <option value="">하나를 선택하세용</option>
+      <option v-for="fruit in fruits" :key="fruit.value" :value="fruit.value">{{ fruit.text }}</option>
+    </select>
+  </div>
+  <script>
+    const App = {
+      data() {
+        return {
+          selected: '',
+          fruits: [
+            { text: '사과', value: 'apple' },
+            { text: '바나나', value: 'banana' },
+            { text: '체리', value: 'cherry' },
+          ]
+        }
+      },
+      watch: {
+        selected(newValue) {
+          console.log(newValue);
+        }
+      }
+    }
+    const vm = Vue.createApp(App).mount('#app');
+  </script>
+</body>
+</html>

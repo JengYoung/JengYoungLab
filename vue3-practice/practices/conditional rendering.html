@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@next"></script>
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+  <div id="app">
+    <!-- <h1 v-if="">Hello Vue!</h1> -->
+    <button @click="toggle">Toggle!</button>
+    <div v-show="isShow">
+      <div>Application</div>
+      <p>HI!</p>
+    </d>
+    <h2 v-cloak>{{ data }}</h2>
+  </div>
+  <script>
+    const App = {
+      data() {
+        return {
+          data: 'GOOD MORNING!',
+          isShow: true
+        }
+      },
+      methods: {
+        toggle() {
+          this.isShow = !this.isShow
+        }
+      }
+    }
+    const vm = Vue.createApp(App).mount('#app');
+  </script>
+</body>
+</html>
