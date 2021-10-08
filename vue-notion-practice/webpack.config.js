@@ -31,11 +31,11 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      favicon: './src/static/favicon.ico',
+      template: './index.html',
+      favicon: './src/assets/favicon.ico',
     }),
     new CopyWebpackPlugin({
-      patterns: [{ from: './src/static' }],
+      patterns: [{ from: './src/assets' }],
     }),
   ],
 };

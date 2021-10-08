@@ -49,7 +49,6 @@ module.exports = (_, { mode }) => ({
         }
       ]
     }),
-    new CleanWebpackPlugin(),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: 'main.css',

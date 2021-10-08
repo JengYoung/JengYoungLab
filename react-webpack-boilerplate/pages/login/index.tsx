@@ -3,12 +3,12 @@ import { Link, Redirect } from 'react-router-dom';
 import React, { useCallback, useState } from 'react';
 
 import axios from 'axios';
-import fetcher from '@utils/request';
+import request from '@utils/request';
 import useInput from '@hooks/useInput';
 import useSWR from 'swr';
 
 const LogIn = () => {
-  const { data, error, mutate } = useSWR('/api/users', fetcher);
+  const { data, error, mutate } = useSWR('/api/users', request);
 
   const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
