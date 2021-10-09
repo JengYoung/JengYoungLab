@@ -21,7 +21,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!axios)/,
+        exclude: /node_modules/,
         use: 'babel-loader',
       },
       {
@@ -30,7 +30,26 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              additionalData: `
+                @use "sass:color";
+                @use "sass:list";
+                @use "sass:map";
+                @use "sass:math";
+                @use "sass:meta";
+                @use "sass:selector";
+                @use "sass:string";
+                @import '@/scss/variables';
+              `,
+            },
+          },
+        ],
       },
     ],
   },
@@ -38,7 +57,6 @@ module.exports = {
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       template: './index.html',
-      favicon: './src/static/favicon.ico',
     }),
     new CopyWebpackPlugin({
       patterns: [{ from: './src/static' }],

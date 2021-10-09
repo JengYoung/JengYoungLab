@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es6": true
   },
   "extends": [
     "plugin:vue/vue3-recommended",
@@ -17,8 +18,8 @@
     "vue/no-multiple-template-root": "off",
     "vue/html-self-closing": ["warn", {
       "html": {
-        "void": "always",
-        "normal": "always",
+        "void": "never",
+        "normal": "never",
         "component": "always"
       },
       "svg": "always",

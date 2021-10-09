@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Home from '@/routes/Home';
+import NotFound from '@/routes/NotFound';
 
 export default createRouter({
   history: createWebHistory(),
@@ -6,7 +8,11 @@ export default createRouter({
   routes: [
     {
       path: '/',
-      component: '',
+      component: Home,
+    },
+    {
+      path: '/:notFound(.*)',
+      component: NotFound,
     },
   ],
 });
