@@ -7,7 +7,7 @@ import Title from './Title';
 import CardForm from './CardForm';
 
 const SignUpForm = ({ onSubmit }) => {
-  const { values, errors, isLoading, handleChange, handleSubmit} = useForm({
+  const { errors, isLoading, handleChange, handleSubmit} = useForm({
     initialValues: { 
       name: '',
       password: '',
