@@ -1,11 +1,15 @@
-import React from 'react'
+import styled from '@emotion/styled';
 
-const Input = React.forwardRef((_, ref) => {
-  return (
-    <>
-      <input ref={ref}></input>
-    </>
-  )
-});
+const Input = styled.input`
+  display: block;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  height: 1.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  border: 0.125rem solid #333;
+  background-color: white;
+  box-sizing: border-box;
+`;
 
-export default Input
+export default Input;
