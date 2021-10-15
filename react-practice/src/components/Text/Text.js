@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import './Text.css';
 
 const Text = ({ 
@@ -46,4 +47,15 @@ const Text = ({
   )
 }
 
-export default Text
+Text.propTypes = {
+  children: PropTypes.node.isRequired,
+  size: PropTypes.onOfType([PropTypes.number, PropTypes.string]),
+  block: PropTypes.bool,
+  delete: PropTypes.bool,
+  code: PropTypes.bool,
+  mark: PropTypes.bool,
+  strong: PropTypes.bool,
+  color: PropTypes.string,
+}
+
+export default Text;
