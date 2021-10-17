@@ -3,7 +3,7 @@ import Divider from '../components/Divider';
 import Text from '../components/Text/index';
 
 export default {
-  title: 'Components/Divider',
+  title: 'Component/Divider',
   component: Divider,
   argTypes: {
   },

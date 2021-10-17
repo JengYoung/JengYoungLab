@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Box = ({ 
   width = 100, 
   height = 100, 
