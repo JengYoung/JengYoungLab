@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Task from './Task';
+import { useTasks } from '../contexts/TaskProvider';
 
 const UnorderedList = styled.ul`
   width: 25rem;
@@ -15,11 +16,20 @@ const UnorderedList = styled.ul`
 `;
 
 const TaskList = (props) => {
+  const { tasks } = useTasks();
+
   return (
-    <UnorderedList>
-      <Task content="Test"></Task>
-      <Task content="Test"></Task>
-      <Task content="Test"></Task>
+    <UnorderedList {...props}>
+      {
+        tasks.map(item =>
+          <Task
+            key={item.id}
+            id={item.id}
+            content={item.content}
+            complete={item.complete}
+          />
+        )
+      }
     </UnorderedList>
   )
 }

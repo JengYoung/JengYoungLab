@@ -48,7 +48,7 @@ const Toggle = ({ on = false, onChange, ...props }) => {
 
   const handleChange = (e) => {
     toggle();
-    onChange && onChange();
+    onChange && onChange(e);
   }
 
   return (

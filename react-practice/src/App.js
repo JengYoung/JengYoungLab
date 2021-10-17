@@ -1,9 +1,25 @@
+import styled from '@emotion/styled';
 import React from 'react';
+import TaskProvider from './components/contexts/TaskProvider';
+import Header from './components/Todolist/Header';
+import NewTaskForm from './components/Todolist/NewTaskForm';
+import TaskList from './components/Todolist/TaskList'
 
+const Container = styled.div`
+  width: 25rem;
+  margin: 0 auto;
+`;
 
 function App() {
   return (
-    <div>컴포넌트 연습하기</div>
+    <TaskProvider>
+      <Container>
+        <Header>TODO</Header>
+        <NewTaskForm></NewTaskForm>
+        <TaskList css={{ marginTop: 16 }}></TaskList>
+      </Container>
+    </TaskProvider>
+
   )
 }
 

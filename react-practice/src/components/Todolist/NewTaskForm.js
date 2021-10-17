@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
+import { useTasks } from '../contexts/TaskProvider';
 
 const Form = styled.form`
   width: 25rem;
@@ -29,10 +30,12 @@ const SubmitBtn = styled.button`
 
 const NewTaskForm = (props) => {
   const [ task, setTask ] = useState('');
+  const { addTask } = useTasks();
 
   const handleSubmit = e => {
     e.preventDefault();
-    setTask(() => '');
+    addTask(task);
+    setTask('');
   }
 
   return (

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/babel-plugin": "^11.3.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -12,6 +11,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -52,12 +52,14 @@
   },
   "devDependencies": {
     "@craco/craco": "^6.3.0",
+    "@emotion/babel-plugin": "^11.3.0",
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@storybook/addon-actions": "^6.3.11",
     "@storybook/addon-essentials": "^6.3.11",
     "@storybook/addon-links": "^6.3.11",
     "@storybook/node-logger": "^6.3.11",
     "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.3.11"
+    "@storybook/react": "^6.3.11",
+    "babel-loader": "8.1.0"
   }
 }

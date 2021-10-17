@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled';
 import Toggle from './Toggle';
+import { useTasks } from '../contexts/TaskProvider';
 
 const ListItem = styled.li`
   display: flex;
@@ -19,6 +20,10 @@ const Content = styled.span`
   flex: 1;
   margin-left: 0.5rem;
   font-size: 0.875rem;
+  text-decoration: ${({ complete }) => complete
+      ? 'line-through'
+      : 'none'
+  };
 `;
 
 const RemoveBtn = styled.button`
@@ -31,12 +36,16 @@ const RemoveBtn = styled.button`
   cursor: pointer;
 `;
 
-const Task = ({ content, complete, ...props }) => {
+const Task = ({ id, content, complete, ...props }) => {
+  const { updateTask, removeTask } = useTasks();
   return (
     <ListItem {...props}>
-      <Toggle on={complete} />
-      <Content>{content}</Content>
-      <RemoveBtn>Remove!</RemoveBtn>
+      <Toggle 
+        on={complete}
+        onChange={e => updateTask(id, e.target.checked)} 
+      />
+      <Content complete={complete}>{complete}{content}</Content>
+      <RemoveBtn onClick={() => removeTask(id)}>Remove!</RemoveBtn>
     </ListItem>
   )
 }
