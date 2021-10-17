@@ -60,6 +60,7 @@
     "@storybook/node-logger": "^6.3.11",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.11",
-    "babel-loader": "8.1.0"
+    "babel-loader": "8.1.0",
+    "feather-icons": "^4.28.0"
   }
 }
