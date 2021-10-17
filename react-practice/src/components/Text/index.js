@@ -49,7 +49,7 @@ const Text = ({
 
 Text.propTypes = {
   children: PropTypes.node.isRequired,
-  size: PropTypes.onOfType([PropTypes.number, PropTypes.string]),
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   block: PropTypes.bool,
   delete: PropTypes.bool,
   code: PropTypes.bool,
