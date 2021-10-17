@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 
 function App() {
-  const [ count, setCount ] = useState(0)
   return (
-    <>
-      { count }
-    </>
+    <div>컴포넌트 연습하기</div>
   )
 }
 
