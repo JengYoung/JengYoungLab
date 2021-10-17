@@ -1,13 +1,13 @@
 import React from 'react';
-import Toggle from '../components/Toggle';
+import Toggle from '../components/Todolist/Toggle';
 
 export default {
-  title: 'Component/Toggle',
+  title: 'Todolist/Toggle',
   component: Toggle,
-  argTypes: {
-    disabled: { control: 'boolean' },
-    onChange: { action: 'onChange' }
-  },
+  // argTypes: {
+  //   disabled: { control: 'boolean' },
+  //   onChange: { action: 'onChange' }
+  // },
 };
 
 const Template = (args) => <Toggle {...args} />;
