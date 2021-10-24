@@ -1,33 +1,21 @@
-import React, { useState } from 'react';
-import Modal from '../components/Modal';
+import React, { useState } from "react";
+import Modal from "../components/Modal";
 
 export default {
-  title: 'Component/Modal',
+  title: "Component/Modal",
   component: Modal,
-  argTypes: {
-  },
+  argTypes: {},
 };
 
 export const Default = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   return (
     <div>
-      <button 
-        onClick={() => setVisible(true)}
-      >
-        Show Modal
-      </button>
-      <Modal 
-        visible={visible} 
-        onClose={() => setVisible(false)}
-      >
+      <button onClick={() => setVisible(true)}>Show Modal</button>
+      <Modal visible={visible} onClose={() => setVisible(false)}>
         Hi!
-        <button 
-          onClose={() => setVisible(false)}
-        >
-          close
-        </button>
+        <button onClose={() => setVisible(false)}>close</button>
       </Modal>
     </div>
-  )
-}
+  );
+};

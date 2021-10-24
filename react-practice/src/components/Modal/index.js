@@ -35,6 +35,7 @@ const Modal = ({
   const ref = useClickAway(() => {
     onClose && onClose()
   });
+  
 
   const containerStyle = useMemo(() => ({ 
     width,

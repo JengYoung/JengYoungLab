@@ -43,7 +43,7 @@ const Image = ({
     imgElement && imgElement.addEventListener(LOAD_IMG_EVENT_TYPE, handleLoadImage);
 
     return () => {
-      imgElement && imgElement.removeEventListner(LOAD_IMG_EVENT_TYPE, handleLoadImage)
+      imgElement && imgElement.removeEventListener(LOAD_IMG_EVENT_TYPE, handleLoadImage)
     }
   }, [lazy])
 
