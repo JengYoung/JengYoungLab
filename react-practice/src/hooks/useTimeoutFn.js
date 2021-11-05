@@ -11,7 +11,6 @@ const useTimeoutFn = (fn, ms) => {
 
   const run = useCallback(() => {
     timeoutId.current && clearTimeout(timeoutId.current);
-
     timeoutId.current = setTimeout(() => {
       callback.current();
     }, ms);
@@ -22,7 +21,7 @@ const useTimeoutFn = (fn, ms) => {
   }, []);
 
   // 이 hook이 사라졌을 때, clear해주어야 함. 이후 타임아웃이 사라지지 않고 실행될 수 있음.
-  useEffect(() => clear, [clear]);
+  useEffect(() => clear(), [clear]);
 
   return [run, clear];
 };
