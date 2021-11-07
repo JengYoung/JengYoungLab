@@ -1,5 +1,9 @@
 {
   "devDependencies": {
     "babel-eslint": "^10.1.0"
+  },
+  "dependencies": {
+    "@craco/craco": "^6.4.0",
+    "@emotion/react": "^11.5.0"
   }
 }
