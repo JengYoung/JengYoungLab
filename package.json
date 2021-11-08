@@ -1,9 +1,11 @@
 {
   "devDependencies": {
+    "@types/redux-logger": "^3.0.9",
     "babel-eslint": "^10.1.0"
   },
   "dependencies": {
     "@craco/craco": "^6.4.0",
-    "@emotion/react": "^11.5.0"
+    "@emotion/react": "^11.5.0",
+    "redux-logger": "^3.0.6"
   }
 }

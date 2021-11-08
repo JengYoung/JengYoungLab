@@ -1,15 +1,19 @@
 import { FormEvent, useState } from 'react';
-import { useTasks } from '../context/TaskProvider';
+import { useDispatch } from 'react-redux';
+
+import { addTask } from '../redux/tasks';
 
 import styled from '@emotion/styled';
 
 const NewTaskForm = (props: any) => {
   const [task, setTask] = useState('');
-  const { addTask } = useTasks();
+  const dispatch = useDispatch();
+
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    addTask(task);
+    // addTask(task);
+    dispatch(addTask(task));
     setTask('');
   }
 
