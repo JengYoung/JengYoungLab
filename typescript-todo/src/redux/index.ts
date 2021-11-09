@@ -1,7 +1,7 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { tasks } from './tasks';
 import logger from 'redux-logger';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import session from 'redux-persist/lib/storage/session';
 import { persistReducer } from 'redux-persist'
 import persistStore from 'redux-persist/es/persistStore';
@@ -13,16 +13,23 @@ const persistConfig = {
   // blackList: [''] // 이 친구만 하지 않겠다는 의미
 }
 
-const combinedReducer = combineReducers({ tasks })
+const combinedReducer = combineReducers({ tasks: tasks.reducer })
 
 const rootReducer = persistReducer(persistConfig, combinedReducer);
 
-export const store = createStore(
-  rootReducer, 
-  composeWithDevTools(applyMiddleware(logger))
-);
+// export const store = createStore(
+//   rootReducer, 
+//   composeWithDevTools(applyMiddleware(logger))
+// );
+
+
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: [logger],
+  devTools: true,
+})
 
 // 로컬스토리지, 세션스토리지에서 값을 빼오기 위한 저장소
 export const persistor = persistStore(store as any);
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;
