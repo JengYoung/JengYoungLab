@@ -1,26 +1,18 @@
-import styled from '@emotion/styled';
-import React from 'react';
-import TaskProvider from './components/contexts/TaskProvider';
-import Header from './components/Todolist/Header';
-import NewTaskForm from './components/Todolist/NewTaskForm';
-import TaskList from './components/Todolist/TaskList'
-
-const Container = styled.div`
-  width: 25rem;
-  margin: 0 auto;
-`;
+import { Route, Routes } from "react-router-dom";
+import { TodoPage } from "@pages";
+import DefaultTemplate from "./components/template/DefaultTemplate";
 
 function App() {
   return (
-    <TaskProvider>
-      <Container>
-        <Header>TODO</Header>
-        <NewTaskForm></NewTaskForm>
-        <TaskList css={{ marginTop: 16 }}></TaskList>
-      </Container>
-    </TaskProvider>
-
-  )
+    <DefaultTemplate>
+      <Routes>
+        <Route exact path="/">
+          HOME
+        </Route>
+        <Route exact path="/posts" element={TodoPage}></Route>
+      </Routes>
+    </DefaultTemplate>
+  );
 }
 
 export default App;
