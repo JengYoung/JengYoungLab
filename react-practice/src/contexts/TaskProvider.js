@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { v4 } from "uuid";
-import useLocalStorage from "../hooks/useLocalStorage";
+import useLocalStorage from "@hooks/useLocalStorage";
 
 const TaskContext = createContext();
 export const useTasks = () => useContext(TaskContext);

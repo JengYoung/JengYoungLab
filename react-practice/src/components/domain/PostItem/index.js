@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Text, Header, Spinner } from "@components/base";
+import { Header, Spinner } from "@components/base";
 import { usePostContext } from "@contexts/PostProvider";
+import { Link } from "react-router-dom";
 
 const PostItem = ({ post }) => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,7 @@ const PostItem = ({ post }) => {
       <Header strong level={3}>
         {post.title}
       </Header>
-      <Text>{post.body}</Text>
+      <Link to={`/posts/${post.id}`}>{`Detail ->`}</Link>
       <div>
         {loading ? (
           <Spinner></Spinner>

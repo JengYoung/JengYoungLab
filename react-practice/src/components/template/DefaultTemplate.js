@@ -1,4 +1,4 @@
-import Menu from "../domain/Menu";
+import Menu from "@components/domain/Menu";
 
 const DefaultTemplate = ({ children }) => {
   return (
