@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const useForm = ({ initialValues, onSubmit, validate }) => {
   const [values, setValues] = useState(initialValues);
@@ -7,29 +7,29 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value })
-    console.log(values)
-  }
+    setValues({ ...values, [name]: value });
+    console.log(values);
+  };
 
-  const handleSubmit = async e => {
-    setIsLoading(true);
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const newErrors = validate(values);
 
     if (Object.keys(newErrors).length === 0) {
-      await onSubmit();
+      await onSubmit(values);
     }
     setErrors(newErrors);
     setIsLoading(false);
-  }
+  };
 
   return {
     values,
     errors,
     isLoading,
     handleChange,
-    handleSubmit
-  }
-}
+    handleSubmit,
+  };
+};
 
 export default useForm;
