@@ -1,7 +1,11 @@
 {
   "devDependencies": {
     "@types/redux-logger": "^3.0.9",
-    "babel-eslint": "^10.1.0"
+    "@typescript-eslint/parser": "^5.3.1",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.3"
   },
   "dependencies": {
     "@craco/craco": "^6.4.0",
