@@ -6,8 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chatting App by Socket.io</title>
   <link rel="stylesheet" href="/css/index.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/index.js"></script>
 </head>
 <body>
-  <div id="main">Hello, Socket!</div>
+  <div id="main">
+    <h1>"Hello, Socket!"</h1>
+    <input type="text" id="test">
+    <button onclick="send()">Send!</button>
+  </div>
 </body>
 </html>

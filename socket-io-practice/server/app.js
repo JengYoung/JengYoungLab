@@ -34,6 +34,26 @@ app.get("/", (req, res) => {
   });
 });
 
+// connection이라는 이벤트 발생 시 -> 콜백 함수 실행.
+/*
+  io.sockets: 접속되는 모든 소켓
+  callback 함수로 전달되는 내부 소켓: 접속된 해당 소켓.
+*/
+io.sockets.on("connection", (socket) => {
+  console.log("User Logined!");
+
+  /*
+    각 소켓들에게도 세부적으로 이벤트를 정의할 수 있다.
+  */
+  socket.on("message", ({ message }) => {
+    console.log("Message: ", message);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User Logout!");
+  });
+});
+
 server.listen(8080, function () {
   console.log("Listening to 8080...");
 });
