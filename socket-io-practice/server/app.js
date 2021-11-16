@@ -40,17 +40,45 @@ app.get("/", (req, res) => {
   callback 함수로 전달되는 내부 소켓: 접속된 해당 소켓.
 */
 io.sockets.on("connection", (socket) => {
-  console.log("User Logined!");
+  const NAME_SERVER = "SERVER";
+  const getLoginMessage = (name) => `${name}님이 접속했어요!`;
+  const getLogoutMessage = (name) => `${name}님이 로그아웃 했어요!`;
+  socket.on("newUser", (name) => {
+    const msg = getLoginMessage(name);
+    console.log(msg);
+    socket.name = name;
+
+    io.sockets.emit("update", {
+      type: "connect",
+      name: NAME_SERVER,
+      message: msg,
+    });
+  });
 
   /*
     각 소켓들에게도 세부적으로 이벤트를 정의할 수 있다.
   */
-  socket.on("message", ({ message }) => {
-    console.log("Message: ", message);
+  socket.on("message", (data) => {
+    // 누가 보냈는지 이름 추가.
+    data.name = socket.name;
+
+    console.log(data);
+
+    /*
+      보낸 사람을 제외한 나머지 유저에게 메시지 전송
+    */
+    socket.broadcast.emit("update", data);
   });
 
   socket.on("disconnect", () => {
-    console.log("User Logout!");
+    const logoutMessage = getLogoutMessage(socket.name);
+    console.log(logoutMessage);
+
+    socket.broadcast.emit("update", {
+      type: "disconnect",
+      name: NAME_SERVER,
+      message: logoutMessage,
+    });
   });
 });
 
