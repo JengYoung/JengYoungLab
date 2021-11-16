@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  socket.emit("usercount", io.engine.clientsCount);
+  socket.emit("userCount", io.engine.clientsCount);
 
   socket.on("message", (msg) => {
     console.log("Message received" + msg);
