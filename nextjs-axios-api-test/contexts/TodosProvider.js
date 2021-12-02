@@ -9,6 +9,10 @@ export const useTodos = () => useContext(TodosContext);
 const TodosProvider = ({ children }) => {
   const [todos, setTodos] = useState(initialState);
 
+  const getTodos = useCallback((todo) => {
+    setTodos(() => todo);
+  }, []);
+
   const addTodo = useCallback((todo) => {
     setTodos((state) => [...state, todo]);
   }, []);
@@ -18,7 +22,7 @@ const TodosProvider = ({ children }) => {
   }, []);
 
   return (
-    <TodosContext.Provider value={{ todos, addTodo, removeTodo }}>
+    <TodosContext.Provider value={{ todos, getTodos, addTodo, removeTodo }}>
       {children}
     </TodosContext.Provider>
   );
