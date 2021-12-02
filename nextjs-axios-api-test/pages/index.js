@@ -5,7 +5,9 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useTodos } from "../contexts/TodosProvider";
 
-const fetchTodos = async () => {
+const { NEXT_PUBLIC_API_END_POINT } = process.env;
+
+export const fetchTodos = async () => {
   const { data } = await axios.get(
     "https://jsonplaceholder.typicode.com/todos"
   );
@@ -16,8 +18,10 @@ export default function Home() {
   const { todos, getTodos } = useTodos();
   useEffect(() => {
     const updateTodo = async () => {
-      const nextTodos = await fetchTodos();
-      getTodos(nextTodos);
+      const { data } = await axios.get(
+        `${NEXT_PUBLIC_API_END_POINT}/api/hello`
+      );
+      getTodos(data);
     };
     updateTodo();
   }, [getTodos]);
@@ -25,10 +29,9 @@ export default function Home() {
   useEffect(() => {
     console.log(todos);
   }, [todos]);
-
   return (
     <>
-      {todos.map(({ userId, id, title, completed }) => (
+      {todos?.map(({ userId, id, title, completed }) => (
         <div key={id}>
           <h3>{title}</h3>
           <h4>JengYoung{userId}</h4>
