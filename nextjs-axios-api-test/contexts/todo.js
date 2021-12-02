@@ -23,3 +23,5 @@ const TodosProvider = ({ children }) => {
     </TodosContext.provider>
   );
 };
+
+export default TodosProvider;
