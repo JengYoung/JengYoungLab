@@ -1,4 +1,4 @@
-import TodosProvider from "../contexts/todo";
+import TodosProvider from "../contexts/TodosProvider";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {

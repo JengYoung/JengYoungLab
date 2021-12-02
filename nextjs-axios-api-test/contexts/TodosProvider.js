@@ -4,7 +4,7 @@ const initialState = [];
 
 const TodosContext = createContext();
 
-export const useTodos = () => useContext(todoContext);
+export const useTodos = () => useContext(TodosContext);
 
 const TodosProvider = ({ children }) => {
   const [todos, setTodos] = useState(initialState);
@@ -18,9 +18,9 @@ const TodosProvider = ({ children }) => {
   }, []);
 
   return (
-    <TodosContext.provider value={{ todos, addTodo, removeTodo }}>
+    <TodosContext.Provider value={{ todos, addTodo, removeTodo }}>
       {children}
-    </TodosContext.provider>
+    </TodosContext.Provider>
   );
 };
 
