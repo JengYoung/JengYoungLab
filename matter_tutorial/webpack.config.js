@@ -40,7 +40,7 @@ module.exports = env => ({
         },
       },
       {
-        test: /\.png$/, // .png 확장자로 마치는 모든 파일
+        test: /\.png|svg$/, // .png 확장자로 마치는 모든 파일
         loader: 'file-loader',
         options: {
           publicPath: './dist/', // prefix를 아웃풋 경로로 지정

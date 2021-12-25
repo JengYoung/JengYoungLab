@@ -1,5 +1,7 @@
 import Matter from 'matter-js';
+import star from './Star.svg';
 
+console.log(star);
 // module aliases
 const Engine = Matter.Engine;
 const Render = Matter.Render;
@@ -18,7 +20,7 @@ const render = Render.create({
   options: {
     width: 560,
     height: 400,
-    background: '#fafafa',
+    background: 'linear-gradient(#2f1347, #161611)',
     wireframes: false,
   },
 });
@@ -27,8 +29,8 @@ const circles = [];
 // create two boxes and a ground
 for (let i = 0; i < 55; i += 1) {
   circles.push(
-    Bodies.circle(10 + i * 10, 400 + Math.random(100) * 1600, 10, {
-      render: { fillStyle: '#5162ff' },
+    Bodies.circle(10 + i * 10, 400 + Math.random(100) * 5000, 8, {
+      render: { fillStyle: '#fee433' },
     }),
   );
 }
@@ -46,12 +48,13 @@ Runner.run(runner, engine);
 
 setInterval(() => {
   const circles = [];
-  for (let i = 0; i < 40; i += 1) {
+  for (let i = 0; i < 55; i += 1) {
     circles.push(
-      Bodies.circle(i * 10, 400 + Math.random(100) * 1600, 10, {
+      Bodies.circle(10 + i * 10, 400 + Math.random(100) * 5000, 10, {
         render: { fillStyle: '#5162ff' },
       }),
     );
   }
+  console.log('hihi');
   Composite.add(engine.world, [...circles]);
-}, 10000);
+}, 15000);
