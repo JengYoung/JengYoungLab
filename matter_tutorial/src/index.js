@@ -13,16 +13,29 @@ const engine = Engine.create();
 // create a renderer
 const render = Render.create({
   element: document.body,
-  engine: engine,
+  engine,
+  options: {
+    width: 560,
+    height: 400,
+    background: '#fafafa',
+    // wireframes: false
+  },
 });
 
+const circles = [];
 // create two boxes and a ground
-const boxA = Bodies.rectangle(430, 200, 80, 80);
-const boxB = Bodies.rectangle(450, 50, 80, 80);
-const ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+for (let i = 0; i < 100; i += 1) {
+  circles.push(
+    Bodies.circle(i * 5, Math.random(100) * 200, 20, {
+      render: { fillStyle: '#6f12ef' },
+    }),
+  );
+}
+
+const ground = Bodies.rectangle(0, 400, 1200, 60, { isStatic: true });
 
 // add all of the bodies to the world
-Composite.add(engine.world, [boxA, boxB, ground]);
+Composite.add(engine.world, [...circles, ground]);
 
 // run the renderer
 Render.run(render);
