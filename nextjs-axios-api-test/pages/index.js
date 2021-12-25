@@ -5,7 +5,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useTodos } from "../contexts/TodosProvider";
 
-const { NEXT_PUBLIC_API_END_POINT } = process.env;
+const API_END_POINT = process.env.NEXT_PUBLIC_API_END_POINT;
+console.log("API_END_POINT", API_END_POINT);
 
 export const fetchTodos = async () => {
   const { data } = await axios.get(
@@ -18,9 +19,7 @@ export default function Home() {
   const { todos, getTodos } = useTodos();
   useEffect(() => {
     const updateTodo = async () => {
-      const { data } = await axios.get(
-        `${NEXT_PUBLIC_API_END_POINT}/api/hello`
-      );
+      const { data } = await axios.get(`${API_END_POINT}/api/hello`);
       getTodos(data);
     };
     updateTodo();
