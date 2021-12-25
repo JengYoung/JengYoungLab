@@ -9,6 +9,7 @@ const Composite = Matter.Composite;
 
 // create an engine
 const engine = Engine.create();
+engine.gravity.y = -0.2;
 
 // create a renderer
 const render = Render.create({
@@ -18,25 +19,22 @@ const render = Render.create({
     width: 560,
     height: 400,
     background: '#fafafa',
-    // wireframes: false
+    wireframes: false,
   },
 });
 
 const circles = [];
 // create two boxes and a ground
-for (let i = 0; i < 100; i += 1) {
+for (let i = 0; i < 55; i += 1) {
   circles.push(
-    Bodies.circle(i * 5, Math.random(100) * 200, 20, {
-      render: { fillStyle: '#6f12ef' },
+    Bodies.circle(10 + i * 10, 400 + Math.random(100) * 1600, 10, {
+      render: { fillStyle: '#5162ff' },
     }),
   );
 }
 
-const ground = Bodies.rectangle(0, 400, 1200, 60, { isStatic: true });
-
 // add all of the bodies to the world
-Composite.add(engine.world, [...circles, ground]);
-
+Composite.add(engine.world, [...circles]);
 // run the renderer
 Render.run(render);
 
@@ -45,3 +43,15 @@ const runner = Runner.create();
 
 // run the engine
 Runner.run(runner, engine);
+
+setInterval(() => {
+  const circles = [];
+  for (let i = 0; i < 40; i += 1) {
+    circles.push(
+      Bodies.circle(i * 10, 400 + Math.random(100) * 1600, 10, {
+        render: { fillStyle: '#5162ff' },
+      }),
+    );
+  }
+  Composite.add(engine.world, [...circles]);
+}, 10000);
