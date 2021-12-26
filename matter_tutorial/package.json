@@ -43,9 +43,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JengYoung/No-Hesitation.git"
-  },
-  "keywords": [],
-  "author": "JengYoung",
-  "license": "ISC"
+    "url": "git+https://github.com/JengYoungLab.git"
+  }
 }
