@@ -1,0 +1,18 @@
+.posts {
+  padding: 1.25rem;  
+}
+
+.posts > .post {
+  padding: 2rem 1rem;
+  border: 1px solid lightgray;
+  margin-bottom: 1rem;
+}
+
+.posts > .post > .post__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.posts > .post > .post__body {
+  margin-top: 0.5rem;
+}

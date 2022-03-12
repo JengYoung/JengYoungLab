@@ -9,6 +9,10 @@ export const initRouter = onRoute => {
       onRoute();
     }
   })
+
+  window.addEventListener('popstate', e => {
+    onRoute();
+  })
 }
 
 export const push = (nextUrl = null) => {
