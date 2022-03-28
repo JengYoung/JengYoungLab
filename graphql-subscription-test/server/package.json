@@ -7,7 +7,7 @@
     "dev": "nodemon dist",
     "start": "node dist",
     "build": "tsc",
-    "start:server": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts"
+    "start:server": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

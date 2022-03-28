@@ -5,8 +5,8 @@ import express from 'express';
 import { createServer } from 'http';
 import cors from 'cors';
 
+const a = 1;
 const PORT = process.env.BASE_PORT;
-const message: string = 'Hello!';
 
 (async () => {
   const app = express();
