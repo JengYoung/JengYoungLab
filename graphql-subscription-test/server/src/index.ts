@@ -11,12 +11,15 @@ import { TestResolver } from './resolvers/test.resolver';
 import { createServer } from 'http';
 import cors from 'cors';
 
+import ws from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+
 dotenvConfig();
 
 const PORT = process.env.BASE_PORT;
 
 (async () => {
-  const GraphQLSchema = await buildSchema({
+  const schema: GraphQLSchema = await buildSchema({
     resolvers: [TestResolver],
   });
 
@@ -31,11 +34,27 @@ const PORT = process.env.BASE_PORT;
     res.send('Hello!');
   });
 
+  const wsServer = new ws.Server({
+    server,
+    path: '/graphql',
+  });
+
   /**
    * NOTE: apollo-server configuration
    */
   const apolloServer = new ApolloServer({
-    schema: GraphQLSchema,
+    schema,
+    plugins: [
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              wsServer.close();
+            },
+          };
+        },
+      },
+    ],
     context: ({ req, res }) => {
       return {
         req,
@@ -48,6 +67,7 @@ const PORT = process.env.BASE_PORT;
   apolloServer.applyMiddleware({ app, cors: corsOptions });
 
   server.listen(PORT, () => {
+    useServer({ schema }, wsServer);
     /* eslint-disable-next-line no-console */
     console.log(`listening to port ${PORT}...`);
   });
