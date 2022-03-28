@@ -14,13 +14,23 @@ import cors from 'cors';
 import ws from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 
+import { RedisPubSub } from 'graphql-redis-subscriptions';
+import Redis from 'ioredis';
+
 dotenvConfig();
 
 const PORT = process.env.BASE_PORT;
 
 (async () => {
+  const redisOptions = {};
+  const pubSub = new RedisPubSub({
+    publisher: new Redis(redisOptions),
+    subscriber: new Redis(redisOptions),
+  });
+
   const schema: GraphQLSchema = await buildSchema({
     resolvers: [TestResolver],
+    pubSub,
   });
 
   const app = express();
