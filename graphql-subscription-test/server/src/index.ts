@@ -3,7 +3,7 @@ import { config as dotenvConfig } from 'dotenv';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
-import { GraphQLSchema } from 'graphql';
+// import { GraphQLSchema } from 'graphql';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { TestResolver } from './resolvers/test.resolver';
@@ -16,6 +16,8 @@ import { useServer } from 'graphql-ws/lib/use/ws';
 
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import Redis from 'ioredis';
+import { MessageResolver } from './resolvers/message.resolver';
+import { GraphQLSchema } from 'graphql';
 
 dotenvConfig();
 
@@ -29,7 +31,7 @@ const PORT = process.env.BASE_PORT;
   });
 
   const schema: GraphQLSchema = await buildSchema({
-    resolvers: [TestResolver],
+    resolvers: [TestResolver, MessageResolver],
     pubSub,
   });
 
@@ -45,7 +47,8 @@ const PORT = process.env.BASE_PORT;
   });
 
   const wsServer = new ws.Server({
-    server,
+    // server,
+    port: 2463,
     path: '/graphql',
   });
 
@@ -78,6 +81,7 @@ const PORT = process.env.BASE_PORT;
 
   server.listen(PORT, () => {
     useServer({ schema }, wsServer);
+    // console.log(wsServer);
     /* eslint-disable-next-line no-console */
     console.log(`listening to port ${PORT}...`);
   });
