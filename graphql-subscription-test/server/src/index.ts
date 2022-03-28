@@ -1,11 +1,10 @@
 import { config as dotenvConfig } from 'dotenv';
-dotenvConfig();
-
 import express from 'express';
 import { createServer } from 'http';
 import cors from 'cors';
 
-const a = 1;
+dotenvConfig();
+
 const PORT = process.env.BASE_PORT;
 
 (async () => {
