@@ -25,6 +25,7 @@ export class MessageResolver {
     @PubSub() pubSub: PubSubEngine
   ): Promise<string> {
     await pubSub.publish('MESSAGE_NOTIFICATION', { message });
+    /* eslint-disable-next-line no-console */
     console.log('publish');
     return message;
   }
@@ -33,6 +34,7 @@ export class MessageResolver {
     topics: 'MESSAGE_NOTIFICATION',
   })
   async receiveMessage(@Root() root: MessagePayload): Promise<MessagePayload> {
+    /* eslint-disable-next-line no-console */
     console.log('message receive: ', root);
     return root;
   }
