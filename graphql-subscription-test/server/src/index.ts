@@ -6,6 +6,7 @@ import { ApolloServer } from 'apollo-server-express';
 // import { GraphQLSchema } from 'graphql';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
+import { PubSub } from 'graphql-subscriptions';
 import { TestResolver } from './resolvers/test.resolver';
 
 import { createServer } from 'http';
@@ -14,8 +15,8 @@ import cors from 'cors';
 import ws from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 
-import { RedisPubSub } from 'graphql-redis-subscriptions';
-import Redis from 'ioredis';
+// import { PubSub } from 'apollo-server';
+// import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { MessageResolver } from './resolvers/message.resolver';
 import { GraphQLSchema } from 'graphql';
 
@@ -24,11 +25,7 @@ dotenvConfig();
 const PORT = process.env.BASE_PORT;
 
 (async () => {
-  const redisOptions = {};
-  const pubSub = new RedisPubSub({
-    publisher: new Redis(redisOptions),
-    subscriber: new Redis(redisOptions),
-  });
+  const pubSub = new PubSub();
 
   const schema: GraphQLSchema = await buildSchema({
     resolvers: [TestResolver, MessageResolver],
@@ -47,8 +44,7 @@ const PORT = process.env.BASE_PORT;
   });
 
   const wsServer = new ws.Server({
-    // server,
-    port: 2463,
+    server,
     path: '/graphql',
   });
 

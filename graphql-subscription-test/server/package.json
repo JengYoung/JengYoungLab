@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@types/ws": "^8.5.3",
+    "apollo-server": "^3.6.6",
     "apollo-server-express": "^3.6.6",
     "class-validator": "^0.13.2",
     "cors": "^2.8.5",
