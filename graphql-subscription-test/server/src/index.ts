@@ -3,11 +3,20 @@ import express from 'express';
 import { createServer } from 'http';
 import cors from 'cors';
 
+import { GraphQLSchema } from 'graphql';
+import 'reflect-metadata';
+import { buildSchema, makeSchema } from 'type-graphql';
+import { TestResolver } from './resolvers/test.resolver';
+
 dotenvConfig();
 
 const PORT = process.env.BASE_PORT;
 
 (async () => {
+  const GraphQLSchema = await buildSchema({
+    resolvers: [TestResolver],
+  });
+
   const app = express();
   const server = createServer(app);
   const corsOptions = {
@@ -20,6 +29,7 @@ const PORT = process.env.BASE_PORT;
   });
 
   server.listen(PORT, () => {
+    /* eslint-disable-next-line no-console */
     console.log(`listening to port ${PORT}...`);
   });
 })();
