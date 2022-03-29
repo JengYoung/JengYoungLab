@@ -135,3 +135,23 @@ describe("toHaveProperty", () => {
     expect(testCar).not.toHaveProperty("options.airConditaional", true);
   });
 });
+
+describe("match 메서드 테스트", () => {
+  // NOTE: toMatch() - 문자열이 정규식에 대응되는지를 확인한다.
+  test("문자열을 올바르게 포함하고 있는가?", () => {
+    expect("Hello, World!").not.toMatch(/Hello, w/);
+    expect("Hello, World!").toMatch(/Hello/);
+  });
+  const testObj = {
+    options: {
+      1: 2,
+    },
+  };
+  const testOptions = {
+    1: 2,
+  };
+
+  test("옵션을 정확하게 포함하고 있는가?", () => {
+    expect(testObj).toMatchObject({ options: testOptions });
+  });
+});
