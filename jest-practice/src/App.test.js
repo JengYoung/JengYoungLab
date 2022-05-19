@@ -49,6 +49,7 @@ test("car1과 car2는 동일한 특징을 가진 차이다.", () => {
 // NOTE: toHaveBeenCalled(): spy를 사용, 특정 함수가 정상적으로 호출되었는지를 검증.
 describe("toHaveBeenCalled", () => {
   let foo;
+  /* eslint-disable-next-line */
   let bar;
 
   beforeEach(() => {
@@ -71,6 +72,7 @@ describe("toHaveBeenCalled", () => {
 // toHaveBeenCalledWith() : 함수에 어떠한 인자가 넘어가 실행되었는지 함께 검증한다.
 describe("toHaveBeenCalledWith", () => {
   let foo;
+  /* eslint-disable-next-line */
   let bar;
 
   beforeEach(() => {
@@ -93,6 +95,7 @@ describe("toHaveBeenCalledWith", () => {
 //toHaveBeenCalledTimes() : 함수가 정확히 몇 번 호출되었는지를 확인한다.
 describe("toHaveBeenCalledTimes", () => {
   let foo;
+  /* eslint-disable-next-line */
   let bar;
 
   beforeEach(() => {
@@ -155,3 +158,31 @@ describe("match 메서드 테스트", () => {
     expect(testObj).toMatchObject({ options: testOptions });
   });
 });
+
+beforeAll(() => console.log("1 - beforeAll"));
+afterAll(() => console.log("1 - afterAll"));
+beforeEach(() => console.log("1 - beforeEach"));
+afterEach(() => console.log("1 - afterEach"));
+test("Setup & Teardown 함수는 올바른 순서로 호출되는지 테스트", () =>
+  console.log("1 - test"));
+
+describe("Scoped / Nested", () => {
+  beforeAll(() => console.log("2 - beforeAll"));
+  afterAll(() => console.log("2 - afterAll"));
+  beforeEach(() => console.log("2 - beforeEach"));
+  afterEach(() => console.log("2 - afterEach"));
+  test("nested test", () => console.log("2 - test"));
+});
+
+// 1 - beforeAll =>
+// 1 - beforeEach =>
+// 1 - test =>
+// 1 - afterEach =>
+// 2 - beforeAll =>
+// 1 - beforeEach =>
+// 2 - beforeEach =>
+// 2 - test =>
+// 2 - afterEach =>
+// 1 - afterEach =>
+// 2 - afterAll
+// 1 - afterAll
