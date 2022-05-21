@@ -15,14 +15,14 @@
 
       <button type="button" class="form__button">로그인하기 🚪</button>
     </form>
-  </div>
 
-  <nav>
-    <router-link class="link" to="/">회원가입</router-link>
-    <router-link class="link" to="/about"
-      >아이디와 비밀번호를 잊어버리셨나요?</router-link
-    >
-  </nav>
+    <nav>
+      <router-link class="link" to="/register">회원가입</router-link>
+      <router-link class="link" to="/about"
+        >아이디와 비밀번호를 잊어버리셨나요?</router-link
+      >
+    </nav>
+  </div>
 </template>
 
 <script lang="ts">

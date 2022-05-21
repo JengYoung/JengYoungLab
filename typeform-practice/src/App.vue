@@ -1,7 +1,7 @@
 <template>
   <router-view v-slot="{ Component }">
     <transition name="fade-transform" mode="out-in">
-      <keep-alive :include="[HomeView, AboutView]">
+      <keep-alive>
         <component :is="Component" />
       </keep-alive>
     </transition>
@@ -11,6 +11,7 @@
 <script lang="ts">
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
+import RegisterPage from "@/views/RegisterPage.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -18,6 +19,7 @@ export default defineComponent({
     return {
       HomeView,
       AboutView,
+      RegisterPage,
     };
   },
 });
