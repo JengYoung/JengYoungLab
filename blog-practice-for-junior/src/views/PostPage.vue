@@ -25,7 +25,7 @@ import { PostInterface } from '../api/post/types';
 export default defineComponent({
   setup() {
     const router = useRouter();
-    const onClickPost = (id: string) => {
+    const onClickPost = (id: number) => {
       router.push({ name: 'postDetail', params: { id } });
     };
     const posts = ref<PostInterface[]>([]);

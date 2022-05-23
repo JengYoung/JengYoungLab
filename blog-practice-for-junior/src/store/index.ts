@@ -1,9 +1,10 @@
 import { createStore } from 'vuex';
+import postModule, { PostModuleState } from './modules/post';
+
+export interface RootState {
+  PostModule: PostModuleState;
+}
 
 export default createStore({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  modules: { postModule },
 });
