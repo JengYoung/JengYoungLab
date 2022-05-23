@@ -13,3 +13,11 @@ export const getPost = async (id: string) => {
 
   return res;
 };
+
+export const getComments = async (id: string) => {
+  const res = await axios.get('https://jsonplaceholder.typicode.com/comments', {
+    params: { postId: id },
+  });
+
+  return res;
+};
