@@ -3,7 +3,12 @@
     <h1>POST PAGE</h1>
   </header>
   <ul class="posts">
-    <li class="post" v-for="post in posts" :key="post.id">
+    <li
+      class="post"
+      v-for="post in posts"
+      :key="post.id"
+      @click="() => onClickPost(post.id)"
+    >
       <h3 class="post__title">{{ post.title }}</h3>
       <div class="post__body">content: {{ post.body }}</div>
       <div class="post__id">{{ post.id }}</div>
@@ -13,10 +18,16 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { getPosts } from '../api/post';
 
 export default defineComponent({
   setup() {
+    const router = useRouter();
+    const onClickPost = (id: string) => {
+      console.log(id);
+      router.push({ name: 'postDetail', params: { id } });
+    };
     const posts = ref([]);
     (async () => {
       const res = await getPosts();
@@ -24,6 +35,8 @@ export default defineComponent({
     })();
     return {
       posts,
+      router,
+      onClickPost,
     };
   },
 });
