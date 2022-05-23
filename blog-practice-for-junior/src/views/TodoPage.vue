@@ -30,8 +30,7 @@
 </template>
 
 <script lang="ts">
-import { getPosts } from '../api/post';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 interface TodoInterface {
   id: string;
@@ -76,12 +75,6 @@ export default defineComponent({
       window.localStorage.setItem('todos', JSON.stringify(todos.value));
     };
 
-    onMounted(() => {
-      (async () => {
-        const data = await getPosts();
-        console.log('data: ', data);
-      })();
-    });
     return {
       todos,
       addTodo,

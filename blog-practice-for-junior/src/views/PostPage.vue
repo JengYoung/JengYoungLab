@@ -1,13 +1,22 @@
 <template>
   <div>POST Page</div>
+  <div>{{ posts }}</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { getPosts } from '../api/post';
 
 export default defineComponent({
   setup() {
-    return {};
+    const posts = ref([]);
+    (async () => {
+      const res = await getPosts();
+      posts.value = res.data;
+    })();
+    return {
+      posts,
+    };
   },
 });
 </script>
