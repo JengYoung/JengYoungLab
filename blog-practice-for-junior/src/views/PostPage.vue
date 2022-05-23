@@ -20,15 +20,15 @@
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getPosts } from '../api/post';
+import { PostInterface } from '../api/post/types';
 
 export default defineComponent({
   setup() {
     const router = useRouter();
     const onClickPost = (id: string) => {
-      console.log(id);
       router.push({ name: 'postDetail', params: { id } });
     };
-    const posts = ref([]);
+    const posts = ref<PostInterface[]>([]);
     (async () => {
       const res = await getPosts();
       posts.value = res.data;

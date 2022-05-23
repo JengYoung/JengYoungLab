@@ -24,21 +24,7 @@
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { getPost, getComments } from '../api/post';
-
-interface PostInterface {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
-
-interface CommentInterface {
-  postId: number;
-  id: number;
-  name: string;
-  email: string;
-  body: string;
-}
+import { PostInterface, CommentInterface } from '../api/post/types';
 
 export default defineComponent({
   setup() {
