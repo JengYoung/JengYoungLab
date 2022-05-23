@@ -21,26 +21,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
-import { getPost, getComments } from '../api/post';
-import { PostInterface, CommentInterface } from '../api/post/types';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   setup() {
+    const store = useStore();
     const route = useRoute();
 
-    const post = ref<PostInterface>(null);
-    const comments = ref<CommentInterface[]>([]);
-
     (async () => {
-      const postRes = await getPost(route.params.id as string);
-      post.value = postRes.data;
-
-      const commentsRes = await getComments(route.params.id as string);
-
-      comments.value = commentsRes.data;
+      await store.dispatch('postModule/fetchPost', route.params.id);
+      await store.dispatch('postModule/fetchComments', route.params.id);
     })();
+
+    const post = computed(() => store.state.postModule.post);
+    const comments = computed(() => store.state.postModule.comments);
+
     return { post, comments };
   },
 });

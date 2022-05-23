@@ -17,22 +17,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import { getPosts } from '../api/post';
-import { PostInterface } from '../api/post/types';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   setup() {
+    const store = useStore();
     const router = useRouter();
     const onClickPost = (id: number) => {
       router.push({ name: 'postDetail', params: { id } });
     };
-    const posts = ref<PostInterface[]>([]);
+
     (async () => {
-      const res = await getPosts();
-      posts.value = res.data;
+      await store.dispatch('postModule/fetchPosts');
     })();
+
+    const posts = computed(() => store.state.postModule.posts);
+
     return {
       posts,
       router,

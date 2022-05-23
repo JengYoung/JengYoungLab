@@ -35,15 +35,15 @@ const postModule: Module<PostModuleState, RootState> = {
   actions: {
     async fetchPosts({ commit }) {
       const posts = await getPosts();
-      commit('mutatePosts', posts);
+      commit('mutatePosts', posts.data);
     },
     async fetchComments({ commit }, id: string) {
       const comments = await getComments(id);
-      commit('mutateComments', comments);
+      commit('mutateComments', comments.data);
     },
     async fetchPost({ commit }, id: string) {
       const post = await getPost(id);
-      commit('mutatePost', post);
+      commit('mutatePost', post.data);
     },
   },
 };
