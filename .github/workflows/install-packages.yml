@@ -25,5 +25,5 @@ jobs:
     - name: remove node_modules, install packages
       run: rm -rf node_modules && yarn install --frozen-lockfile
     
-    - name: lint check
-      run: yarn lint
+    - name: CI finish!🙌
+      run: echo -e "FINISH CI TEST!"
