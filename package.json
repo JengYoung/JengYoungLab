@@ -1,9 +1,11 @@
 {
   "devDependencies": {
     "@types/redux-logger": "^3.0.9",
-    "@typescript-eslint/parser": "^5.3.1",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
+    "eslint": "^8.16.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.3",
     "husky": "^8.0.0"
@@ -20,6 +22,7 @@
     "socket.io": "^4.3.2"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "yarn lint"
   }
 }
