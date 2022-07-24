@@ -4,8 +4,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "packageManager": "yarn@1.22.17",
   "scripts": {
     "start": "yarn workspace @jengyoungs/app start",
+    "start:watch": "lerna run start --parallel",
     "start:lerna": "lerna run start --scope=@jengyoungs/app"
   },
   "workspaces": [

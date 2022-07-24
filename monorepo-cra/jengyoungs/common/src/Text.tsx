@@ -2,7 +2,7 @@ import React from 'react'
 
 const Text = () => {
   return (
-    <div>Text</div>
+    <div>Text22231412223</div>
   )
 }
 
