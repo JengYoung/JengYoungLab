@@ -7642,7 +7642,7 @@ language-tags@^1.0.5:
 
 lerna@^5.2.0:
   version "5.2.0"
-  resolved "https://registry.npmjs.org/lerna/-/lerna-5.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/lerna/-/lerna-5.2.0.tgz#eac37e40e111ae1bbc2f0716718915043e0fb0a3"
   integrity sha512-JbjmGhS8ja5lmTnwZhtDiFxkthR2chhA3QAyRPZDm3ptgZhZbAKsgIj4SdEQvZcepU4ixPlX9d3lIzbzlQFPAg==
   dependencies:
     "@lerna/add" "5.2.0"
