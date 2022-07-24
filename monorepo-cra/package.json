@@ -4,5 +4,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "workspaces": ["jengyoungs/*"]
+  "workspaces": [
+    "jengyoungs/*"
+  ],
+  "devDependencies": {
+    "lerna": "^5.2.0"
+  }
 }
