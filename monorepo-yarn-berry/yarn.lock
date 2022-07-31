@@ -421,6 +421,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@packages/common@file:../common::locator=client%40workspace%3Apackages%2Fclient":
+  version: 0.0.0
+  resolution: "@packages/common@file:../common#../common::hash=32eff7&locator=client%40workspace%3Apackages%2Fclient"
+  checksum: ca3ba517f74626c405cb9b9cac860c843715c954bcb50fe8cf539096a558c5c4144397edddcb47e7e566a604f2449593688183b4b97bcedaed31a0a1e9315744
+  languageName: node
+  linkType: hard
+
+"@packages/common@workspace:packages/common":
+  version: 0.0.0-use.local
+  resolution: "@packages/common@workspace:packages/common"
+  dependencies:
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
 "@tootallnate/once@npm:2":
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
@@ -709,6 +724,21 @@ __metadata:
   checksum: 2ac8cd2b2f5ec986a3c743935ec85b07bc174d5421a5efc8017e1f146a1cf5f781ae962618f416352103b32c9cd7e203276e8c28241bbe946160cab16149fb68
   languageName: node
   linkType: hard
+
+"client@workspace:packages/client":
+  version: 0.0.0-use.local
+  resolution: "client@workspace:packages/client"
+  dependencies:
+    "@packages/common": ../common
+    "@types/react": ^18.0.15
+    "@types/react-dom": ^18.0.6
+    "@vitejs/plugin-react": ^2.0.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.6.4
+    vite: ^3.0.0
+  languageName: unknown
+  linkType: soft
 
 "color-convert@npm:^1.9.0":
   version: 1.9.3
@@ -1272,20 +1302,6 @@ __metadata:
   checksum: 33b87aa88dfa40ca6ee31d7df61712bbbad3d3c05c132c23e59b9b61d34631b337a18ff2b8dc5553acdc871ec72b741e485f78969cf006124a3f57174de29a0e
   languageName: node
   linkType: hard
-
-"frontend@workspace:package/frontend":
-  version: 0.0.0-use.local
-  resolution: "frontend@workspace:package/frontend"
-  dependencies:
-    "@types/react": ^18.0.15
-    "@types/react-dom": ^18.0.6
-    "@vitejs/plugin-react": ^2.0.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.6.4
-    vite: ^3.0.0
-  languageName: unknown
-  linkType: soft
 
 "fs-minipass@npm:^2.0.0, fs-minipass@npm:^2.1.0":
   version: 2.1.0

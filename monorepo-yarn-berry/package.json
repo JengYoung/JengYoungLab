@@ -1,10 +1,9 @@
 {
   "name": "monorepo-yarn-berry",
   "packageManager": "yarn@3.2.2",
-  "private": true,
   "workspaces": {
     "packages": [
-      "package/*"
+      "packages/*"
     ]
   },
   "devDependencies": {
