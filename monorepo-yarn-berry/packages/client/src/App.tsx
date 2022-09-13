@@ -4,13 +4,14 @@ import './App.css'
 import text from '@packages/common'
 
 function App() {
+  const hi = "123";
   const [count, setCount] = useState(0)
   console.log(text)
-
+  console.log("hihi")
   return (
     <div className="App">
       <div>
-        {text}
+        {text }
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>

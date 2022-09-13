@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+#!/bin/sh
+HEAD_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+echo " ============================================================================ "
+echo " 🟠 NOW BRANCH IS ${HEAD_BRANCH}. CHECK PUSH POSSIBLE... 🔍 🟠 "
+
+FORBIDDEN_HTTPS_URL="https://github.com/JengYoung/JengyoungLab.git" # insert your remote url (https)
+FORBIDDEN_SSH_URL="git@github.com:JengYoung/JengyoungLab.git" # insert your remote url (ssh)
+
+# remained develop branch which could use later! 🥰
+FORBIDDEN_REFS=("main" "develop") # insert branch ref
+
+url=$2
+
+if [ "${url}" != "${FORBIDDEN_HTTPS_URL}" -a "${url}" != "${FORBIDDEN_SSH_URL}" ]
+then
+    echo "🔴 🚫 YOUR URL: ${url}, FORBIDDEN URL: ${FORBIDDEN_HTTPS_URL}(https), ${FORBIDDEN_SSH_URL}(ssh) 🔴"
+    exit 1;
+fi
+
+refs_check=false
+for ref in "${FORBIDDEN_REFS[@]}"
+do
+    if [ "${HEAD_BRANCH}" == "${ref}" ]
+    then
+        refs_check=true
+    fi
+done
+
+if [ "${refs_check}" == "true" ]
+then
+    echo " 🔴 🚫 DO NOT PUSH FORBIDDEN BRANCH '${url}' DIRECTLY! 🔴"
+    exit 1 # 금지된 ref 로 push 를 실행하면 에러
+else
+    echo " 🟢 PUSH COMMIT TO $1/${HEAD_BRANCH}!👏 🟢 "
+    exit 0
+fi
+
+exit 0

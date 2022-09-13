@@ -6,5 +6,14 @@
   "eslint.nodePath": ".yarn/sdks",
   "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "typescriptreact",
+    "react",
+    "typescript"
+  ]
 }
