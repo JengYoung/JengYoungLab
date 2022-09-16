@@ -1,4 +1,4 @@
 // import draw from './src/draw-rectangle'
-import draw from './src/draw-chat-bubble'
+import draw from './src/draw-heart'
 
 draw();
