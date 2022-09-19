@@ -1,4 +1,4 @@
-// import draw from './src/draw-rectangle'
-import draw from './src/draw-miterLimit'
+import './src/draw-dashline'
+// import draw from './src/draw-dashline'
 
-draw()
+// draw()
