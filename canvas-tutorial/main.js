@@ -1,4 +1,4 @@
 // import './src/draw-dashline'
-import draw from './src/draw-radial-gradient'
+import draw from './src/draw-conic-gradient'
 
 draw()
