@@ -1,4 +1,4 @@
 // import draw from './src/draw-rectangle'
-import draw from './src/draw-packman'
+import draw, { drawStroke } from './src/draw-pallete'
 
-draw();
+drawStroke()
