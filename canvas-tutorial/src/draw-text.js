@@ -16,7 +16,20 @@ const draw = () => {
     ctx.fillStyle = '#ff0fa2';
     ctx.fillText(text, 5, 30);
   }
-
 }
 
-export default draw;
+
+const draw2 = () => {
+  const canvas = document.querySelector('canvas')
+  
+  if (canvas.getContext) {
+    const ctx = canvas.getContext('2d');
+    ctx.font = '48px serif';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#625fff'
+    ctx.fillText('JengYoung', 10, 48);
+    ctx.strokeText('JengYoung', 10, 48);
+  
+  }
+}
+export default draw2;
