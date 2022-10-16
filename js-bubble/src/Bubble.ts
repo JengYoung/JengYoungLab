@@ -1,7 +1,7 @@
 import Ball from "./Ball";
 import Point from "./Point";
 
-class LavaLamp {
+class Bubble {
   ctx: CanvasRenderingContext2D;
   width: number; 
   height: number; 
@@ -218,4 +218,4 @@ class LavaLamp {
   }
 }
 
-export default LavaLamp;
+export default Bubble;

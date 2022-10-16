@@ -1,4 +1,4 @@
-import LavaLamp from "./LavaLamp";
+import Bubble from "./Bubble";
 import "./style.module.scss";
 
 export class App {
@@ -12,7 +12,7 @@ export class App {
   left: number;
   top: number;
 
-  lava!: LavaLamp
+  lava!: Bubble
 
   constructor(target: Element) {
     this.target = target;
@@ -20,7 +20,6 @@ export class App {
     this.canvas.id = 'canvas';
     
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
-    console.log(this.ctx)
     
     this.callback = null;
 
@@ -42,34 +41,28 @@ export class App {
     
     this.resize();
 
-    this.lava = new LavaLamp(this.ctx, this.width, this.height, 6, "#FF9298", "#E4008E")
+    this.lava = new Bubble(this.ctx, this.width, this.height, 6, "#FF9298", "#E4008E")
   }
 
   resize() {
-    let elem = this.canvas;
+    let elem = this.canvas.offsetParent as HTMLElement;
 
     this.width = elem.offsetWidth;
     this.height = elem.offsetHeight;
+    this.left +=  elem.offsetLeft;
+    this.top += elem.offsetTop;
 
-    console.log(this.width, this.height)
-    
-    for (let left = 0, top = 0; elem !== null; elem = elem.offsetParent as HTMLCanvasElement) {
-      left += elem.offsetLeft;
-      top += elem.offsetTop;
-
-      this.left += left;
-      this.top += top;
-    }
-
-    console.log('here: ', this.canvas)
     if (this.ctx) {
       this.canvas.width = this.width;
       this.canvas.height = this.height
+      
+      this.lava = new Bubble(this.ctx, this.width, this.height, 6, "#FF9298", "#E4008E")
     }
 
     if (this.callback) {
       this.callback();
     }
+
   }
 
   render() {
@@ -84,7 +77,6 @@ export class App {
     requestAnimationFrame(() => {
       this.run()
     });
-    
     this.lava.renderMetaballs();  
   };
 }
