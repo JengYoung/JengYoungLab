@@ -1,6 +1,7 @@
+import LavaLamp from "./LavaLamp";
 import "./style.module.scss";
 
-class App {
+export class App {
   target: Element
   canvas: HTMLCanvasElement;
   callback: (() => any) | null;
@@ -68,7 +69,21 @@ class App {
 
   render() {
     this.target.append(this.canvas);
+
+    
   }
+
+  run() {
+    const screen = this.init(null);
+    screen.resize();
+    
+    this.ctx.clearRect(0, 0, screen.width, screen.height);
+    const lava0 = new LavaLamp(screen.width, screen.height, 6, "#FF9298", "#E4008E");
+
+    lava0.renderMetaballs();
+    
+    requestAnimationFrame(this.run);
+  };
 }
 
 const app = new App(document.querySelector('#app') as Element);
