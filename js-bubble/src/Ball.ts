@@ -31,7 +31,7 @@ class Ball {
       this.parent.height * 0.2 + Math.random() * this.parent.height * 0.6
     )
 
-    this.size = (this.parent.minScreenSize / 15) + (Math.random() * (this.max - this.min) + this.min) * (this.parent.minScreenSize * 15);
+    this.size = (this.parent.minScreenSize / 15) + (Math.random() * (this.max - this.min) + this.min) * (this.parent.minScreenSize / 15);
 
     this.width = this.parent.width;
     this.height = this.parent.height;

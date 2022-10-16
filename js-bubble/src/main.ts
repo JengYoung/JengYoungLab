@@ -12,13 +12,15 @@ export class App {
   left: number;
   top: number;
 
-  constructor(target: Element) {
+  lava!: LavaLamp
 
+  constructor(target: Element) {
     this.target = target;
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
     
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+    console.log(this.ctx)
     
     this.callback = null;
 
@@ -28,8 +30,8 @@ export class App {
     this.height = 0;
   }
 
-  init(callback: typeof this.callback){
-    this.callback = callback ?? null;
+  init(callback: typeof this.callback) {
+    this.callback = callback || null;
 
     window.addEventListener('resize', () => {
       this.resize();
@@ -37,17 +39,19 @@ export class App {
 
     this.canvas.addEventListener('selectstart', () => false);
     this.canvas.addEventListener('ondrag', () => false);
-
+    
     this.resize();
 
-    return this;
+    this.lava = new LavaLamp(this.ctx, this.width, this.height, 6, "#FF9298", "#E4008E")
   }
 
   resize() {
     let elem = this.canvas;
 
-    this.width = this.canvas.offsetWidth;
-    this.height = this.canvas.offsetHeight;
+    this.width = elem.offsetWidth;
+    this.height = elem.offsetHeight;
+
+    console.log(this.width, this.height)
     
     for (let left = 0, top = 0; elem !== null; elem = elem.offsetParent as HTMLCanvasElement) {
       left += elem.offsetLeft;
@@ -57,32 +61,31 @@ export class App {
       this.top += top;
     }
 
+    console.log('here: ', this.canvas)
     if (this.ctx) {
       this.canvas.width = this.width;
       this.canvas.height = this.height
     }
 
-    if (!!this.callback) {
+    if (this.callback) {
       this.callback();
     }
   }
 
   render() {
     this.target.append(this.canvas);
+    this.init(null);
 
-    
+    this.run();
   }
 
   run() {
-    const screen = this.init(null);
-    screen.resize();
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    requestAnimationFrame(() => {
+      this.run()
+    });
     
-    this.ctx.clearRect(0, 0, screen.width, screen.height);
-    const lava0 = new LavaLamp(screen.width, screen.height, 6, "#FF9298", "#E4008E");
-
-    lava0.renderMetaballs();
-    
-    requestAnimationFrame(this.run);
+    this.lava.renderMetaballs();  
   };
 }
 

@@ -2,6 +2,7 @@ import Ball from "./Ball";
 import Point from "./Point";
 
 class LavaLamp {
+  ctx: CanvasRenderingContext2D;
   width: number; 
   height: number; 
   numBalls: number;
@@ -25,7 +26,16 @@ class LavaLamp {
   sign: number;
 
 
-  constructor(width: number, height: number, numBalls: number, c0: string, c1: string) {
+  constructor(
+    ctx: CanvasRenderingContext2D, 
+    width: number, 
+    height: number, 
+    numBalls: number, 
+    c0: string, 
+    c1: string
+  ) {
+    this.ctx = ctx;
+
     this.width = width;
     this.height = height;
     this.numBalls = numBalls;
@@ -33,7 +43,7 @@ class LavaLamp {
     this.c1 = c1;
 
     this.step = 5;
-    this.minScreenSize = Math.min(width, height);
+    this.minScreenSize = Math.min(this.width, this.height);
     this.sx = Math.floor(this.width / this.step);
     this.sy = Math.floor(this.height / this.step);
 
@@ -55,7 +65,7 @@ class LavaLamp {
   init() {
     const sxPlus2 = this.sx + 2;
 
-    for (let i = 0; i < sxPlus2 * (this.sy + 2); i += 1) {
+    for (let i = 0; i < (sxPlus2) * (this.sy + 2); i += 1) {
       this.grid[i] = new Point(
         (i % sxPlus2) * this.step, 
         (Math.floor(i / sxPlus2)) * this.step
@@ -90,7 +100,7 @@ class LavaLamp {
     }
 
     this.grid[id].force = force;
-    return false;
+    return force;
   }
 
   marchingSquares(next: number[]) {
@@ -98,6 +108,8 @@ class LavaLamp {
     
     const id = x + y * (this.sx + 2);
 
+    // console.log(this.sx, x, y)
+    // console.log(this.grid, id, this.grid[id])
     if (this.grid[id].computed === this.iter) {
       return false;
     }
@@ -135,14 +147,13 @@ class LavaLamp {
         Math.abs(Math.abs(this.grid[(x + this.plx[4 * dir + 3]) + (y + this.ply[4 * dir + 3]) * (this.sx + 2)].force) - 1) + 1
       )
 
-      const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-
-      ctx.lineTo(
+      this.ctx.lineTo(
         this.grid[(x + this.plx[4 * dir]) + (y + this.ply[4 * dir]) * (this.sx + 2)].x + this.ix[dir] * ix,
         this.grid[(x + this.plx[4 * dir + 1]) + (y + this.ply[4 * dir + 1]) * (this.sx + 2)].y + this.ix[dir + 4] * ix
       );
+
       this.paint = true;
+      
       // next
       return [
         x + this.ix[dir + 4],
@@ -153,9 +164,6 @@ class LavaLamp {
   }
 
   renderMetaballs() {
-    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-
     let i = 0;
     let ball;
 
@@ -166,15 +174,18 @@ class LavaLamp {
     this.sign = -this.sign;
     this.paint = false;
     
-    ctx.fillStyle = this.metaFill;
-    ctx.beginPath();
+    this.ctx.fillStyle = this.metaFill;
+    this.ctx.beginPath();
     
     i = 0;
     
-    while (ball = this.balls[i++]) {
+    while (ball = this.balls[i]) {
+      i += 1;
+      
       let next = [
         Math.round(ball.pos.x / this.step),
-        Math.round(ball.pos.y / this.step), false
+        Math.round(ball.pos.y / this.step), 
+        false
       ];
 
       while (next) {
@@ -182,9 +193,9 @@ class LavaLamp {
       }
 
       if (this.paint) {
-        ctx.fill();
-        ctx.closePath();
-        ctx.beginPath();
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.beginPath();
         
         this.paint = false;
       }

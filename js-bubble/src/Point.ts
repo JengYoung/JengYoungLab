@@ -11,7 +11,7 @@ class Point {
     this.x = x;
     this.y = y;
 
-    this.magnitude = Math.pow(x, 2) + Math.pow(y, 2);
+    this.magnitude = x * x + y * y
     this.computed = 0;
     this.force = 0;
   }
