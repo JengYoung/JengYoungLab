@@ -38,6 +38,14 @@ export class App {
       { length: this.#STEP }, 
       (_, idx) => +(idx !== 60)
     ).map(this.segment.apply(this, [this.canvasCenterXY, 30]))
+
+    this.addEvent();
+  }
+
+  addEvent() {
+    this.canvas.addEventListener('mousemove', (e: MouseEvent) => {
+      this.position = [e.x, e.y]
+    })
   }
 
   get width() {
@@ -127,23 +135,24 @@ export class App {
     const HALF_PI = Math.PI / 2;
 
     const dist = this.getDist(c1, c2)
-    const maxDist = r1 + r2 * 2.5;
+    const maxDist = (r1 + r2) * 1.2;
 
-    if (!r1 || !r2 || dist > maxDist || dist <= Math.abs(r1 - r2)) {
+    if (r1 === 0 || r2 === 0 || dist > maxDist || dist <= Math.abs(r1 - r2)) {
       return callback();
     }
 
     let check = dist < r1 + r2;
     let u1 = check ? Math.acos((Math.pow(r1, 2) + Math.pow(dist, 2) - Math.pow(r2, 2)) / (2 * r1 * dist)) : 0;
-    let u2 = check ? Math.acos((Math.pow(r2, 2) + Math.pow(dist, 2) - Math.pow(r1, 2)) / (2 * r2 * dist)) : 0
+    let u2 = check ? Math.acos((Math.pow(r2, 2) + Math.pow(dist, 2) - Math.pow(r1, 2)) / (2 * r2 * dist)) : 0;
 
     const angle1 = this.getAngle(c2, c1);
     const angle2 = Math.acos((r1 - r2) / dist);
 
     const angle1a =(angle1 + u1) + (angle2 - u1) * v
     const angle1b =(angle1 - u1) - (angle2 - u1) * v
-    const angle2a = angle1 + Math.PI - u2 + -(Math.PI - u2 - angle2) * v;
-    const angle2b = -(angle1 + Math.PI - u2) + (Math.PI - u2 - angle2) * v;
+
+    const angle2a = (angle1 + (Math.PI - u2)) + (angle2 - (Math.PI - u2)) * v;
+    const angle2b = (angle1 - (Math.PI - u2)) - (angle2 - (Math.PI - u2)) * v;
 
     const p1a = this.getVector(c1, angle1a, r1);
     const p1b = this.getVector(c1, angle1b, r1);
@@ -207,7 +216,8 @@ export class App {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     const c1 = this.points[this.currentStep];
-    const c2 = this.points[this.currentStep - (this.step / 2)] || this.points[this.currentStep + (this.step / 2)]
+    const c2 = this.points[this.currentStep - (this.step / 2)] || 
+               this.points[this.currentStep + (this.step / 2)]
 
     this.ctx.fillStyle = '#FFCC00'
 
@@ -222,7 +232,7 @@ export class App {
     this.ctx.fill(this.makeMetaball(this.#SIZE, this.#MAIN_SIZE, c2, this.canvasCenterXY, makeMetaballCallback))
 
     this.ctx.restore();
-    
+
     requestAnimationFrame(() => {
       this.draw()
     })
