@@ -210,12 +210,19 @@ export class App {
     const c2 = this.points[this.currentStep - (this.step / 2)] || this.points[this.currentStep + (this.step / 2)]
 
     this.ctx.fillStyle = '#FFCC00'
+
     this.ctx.fill(this.makeCircle(...this.position, 25))
     this.ctx.fill(this.makeCircle(...this.canvasCenterXY, this.#MAIN_SIZE))
     this.ctx.fill(this.makeCircle(...c1, this.#SIZE))
     this.ctx.fill(this.makeCircle(...c2, this.#SIZE))
-    
 
+    const makeMetaballCallback = () => this.makeCircle(...this.canvasCenterXY, this.#MAIN_SIZE);
+    this.ctx.fill(this.makeMetaball(25, this.#MAIN_SIZE, this.position, this.canvasCenterXY, makeMetaballCallback))
+    this.ctx.fill(this.makeMetaball(this.#SIZE, this.#MAIN_SIZE, c1, this.canvasCenterXY, makeMetaballCallback))
+    this.ctx.fill(this.makeMetaball(this.#SIZE, this.#MAIN_SIZE, c2, this.canvasCenterXY, makeMetaballCallback))
+
+    this.ctx.restore();
+    
     requestAnimationFrame(() => {
       this.draw()
     })
