@@ -16,6 +16,7 @@ export class App {
 
   constructor(target: Element) {
     this.target = target;
+
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
     
@@ -77,6 +78,7 @@ export class App {
     requestAnimationFrame(() => {
       this.run()
     });
+    
     this.lava.renderMetaballs();  
   };
 }

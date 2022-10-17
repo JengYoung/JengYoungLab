@@ -16,7 +16,7 @@ class Point {
     this.force = 0;
   }
 
-  add(p: { x: number, y: number}) {
+  add(p: { x: number, y: number }) {
     return new Point(this.x + p.x, this.y + p.y)
   }
 }
