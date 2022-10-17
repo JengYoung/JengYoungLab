@@ -26,7 +26,8 @@ const draw2 = () => {
     const ctx = canvas.getContext('2d');
     ctx.font = '48px serif';
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#625fff'
+    ctx.fillStyle = '#625fff';
+    
     ctx.fillText('JengYoung', 10, 48);
     ctx.strokeText('JengYoung', 10, 48);
   

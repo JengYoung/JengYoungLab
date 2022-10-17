@@ -76,7 +76,7 @@ export class Wave {
     ctx.lineTo(this.stageWidth, this.stageHeight);
     ctx.lineTo(this.points[0].x, this.stageHeight);
 
-    // 이후 색을 채우고, 패스를 종료.
+    // 이후 색을 채우고, 패스 그리기를 종료.
     ctx.fill();
     ctx.closePath();
   }

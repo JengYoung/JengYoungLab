@@ -25,5 +25,5 @@
     "prepare": "husky install",
     "lint": "yarn lint"
   },
-  "packageManager": "yarn@3.2.2"
+  "packageManager": "yarn@3.2.4"
 }
