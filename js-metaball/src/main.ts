@@ -27,7 +27,7 @@ class App {
   }
   set height(val: number) {
     this.canvas.height = val;
-  }  
+  }
 
   init() {
     this.width = window.innerWidth;
@@ -46,6 +46,7 @@ class App {
 
   render() {
     this.target.appendChild(this.canvas);
+    this.init();
   }
 }
 
