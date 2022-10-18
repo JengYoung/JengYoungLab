@@ -20,13 +20,19 @@ class Metaballs {
     return [...this.#metaballs]
   }
 
+  moveAll(weight: number) {
+    this.#metaballs.forEach((ball) => {
+      ball.move(weight);
+    })
+  }
+
   init() {
     for (let i = 0; i < this.ballCnt; i += 1) {
       const x = getRandomInt(0, this.ctx.canvas.width);
       const y = getRandomInt(0, this.ctx.canvas.height);
-      const r = getRandomInt(10, 100);
-      const vx = getRandomInt(-400, 400);
-      const vy = getRandomInt(-400, 400);
+      const r = getRandomInt(10, 40);
+      const vx = getRandomInt(-1400, 1400);
+      const vy = getRandomInt(-1400, 1400);
 
       const metaball = new Metaball(
         this.ctx,

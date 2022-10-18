@@ -21,17 +21,13 @@ class Metaball {
     this.x += this.vx * weight;
     this.y += this.vy * weight;
 
-    const isMetaballOverCanvas = (position: 'x' | 'y') => {
-      return (this[position] - this.r < 0 && this[`v${position}`] < 0 ) || 
-             (this[position] + this.r > this.ctx.canvas.width && this[`v${position}`] > 0)
+    const isMetaballOverCanvas = (xy: 'x' | 'y', vxvy: 'vx' | 'vy', wh: 'width' | 'height') => {
+      return (this[xy] - this.r < 0 && this[vxvy] < 0 ) || 
+             (this[xy] + this.r > this.ctx.canvas[wh] && this[vxvy] > 0)
     }
     
-    if (isMetaballOverCanvas('x')) this.vx *= -1;
-    if (isMetaballOverCanvas('y')) this.vy *= -1;
-  }
-
-  getRandomInt(min: number, max: number): number {
-    return Math.ceil(Math.random() * (max - min) + min);
+    if (isMetaballOverCanvas('x', 'vx', 'width')) this.vx *= -1;
+    if (isMetaballOverCanvas('y', 'vy', 'height')) this.vy *= -1;
   }
 }
 

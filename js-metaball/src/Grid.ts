@@ -8,13 +8,15 @@ class Grid {
 
     this.row = row;
     this.col = col;
+
+    console.log(this.pointWidth, this.pointHeight)
   }
 
   get pointWidth() {
     return this.ctx.canvas.width / this.row;
   }
   get pointHeight() {
-    return this.ctx.canvas.height / this.row;
+    return this.ctx.canvas.height / this.col;
   }
 }
 
