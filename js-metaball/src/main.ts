@@ -1,8 +1,15 @@
+import Grid from "./Grid";
+import Metaball from "./Metaball";
+import Metaballs from "./Metaballs";
+
 class App {
   target: Element
 
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
+
+  grid: Grid;
+  metaballs: Metaballs;
 
   #gradientHeadColor = "#ffbb00";
   #gradientTailColor = "#7828e9";
@@ -11,6 +18,9 @@ class App {
     this.target = target;
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+
+    this.grid = new Grid(this.ctx, 1000, 1000);
+    this.metaballs = new Metaballs(this.ctx, 10);
 
     this.init();
   }
@@ -47,6 +57,14 @@ class App {
   render() {
     this.target.appendChild(this.canvas);
     this.init();
+  }
+
+  getForce(x: number, y: number): number {
+    const balls = this.metaballs.balls;
+
+    return balls.reduce((acc: number, {x: mx, y: my, r: mr}: Metaball) => {
+      return acc + Math.pow(mr, 2) / (Math.pow(x - mx, 2) + Math.pow(y - my, 2));
+    }, 0)
   }
 }
 
