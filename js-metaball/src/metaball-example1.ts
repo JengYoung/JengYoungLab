@@ -135,7 +135,7 @@ export class App {
     const HALF_PI = Math.PI / 2;
 
     const dist = this.getDist(c1, c2)
-    const maxDist = (r1 + r2) * 1.2;
+    const maxDist = (r1 + r2) * 1.5;
 
     if (r1 === 0 || r2 === 0 || dist > maxDist || dist <= Math.abs(r1 - r2)) {
       return callback();
@@ -172,6 +172,7 @@ export class App {
     const h4 = this.getVector(p1b, angle1b + HALF_PI, wr1);
     const h3 = this.getVector(p2b, angle2b - HALF_PI, wr2);
 
+    this.ctx.fillStyle = 'black'
     return this.transformPath(
       p1a,
       p2a,
@@ -198,6 +199,12 @@ export class App {
     escaped: boolean,
     r: number,
   ) {
+    console.log([
+      'M', p1a,
+      'C', h1, h2, p2a,
+      'A', r, r, 0, escaped ? 1 : 0, 0, p2b,
+      'C', h3, h4, p1b,
+    ].join(' '))
     return new Path2D([
       'M', p1a,
       'C', h1, h2, p2a,

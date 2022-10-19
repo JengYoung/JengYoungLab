@@ -53,6 +53,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dat.gui@npm:0.7.5":
+  version: 0.7.5
+  resolution: "@types/dat.gui@npm:0.7.5"
+  checksum: d18272ac0df253e170fb5b8c6e01f62d99caf95aba166e67d4b0533381cd085dbe2795c8357babe1cda2b34abf9abff2aed88e33ce34c8331ba97f45c6623a52
+  languageName: node
+  linkType: hard
+
+"@types/gl-matrix@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@types/gl-matrix@npm:3.2.0"
+  dependencies:
+    gl-matrix: "*"
+  checksum: 1baa16f2eef299c9379e91f883b121fce97fb84975f6cf790365fb74edd2168ee06aa0cbf25425acbd63970f2b3eb6857a85fa8aa756613dcbe331b64b65e6c1
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^18.11.0":
   version: 18.11.0
   resolution: "@types/node@npm:18.11.0"
@@ -252,6 +268,13 @@ __metadata:
   version: 1.1.0
   resolution: "console-control-strings@npm:1.1.0"
   checksum: 8755d76787f94e6cf79ce4666f0c5519906d7f5b02d4b884cf41e11dcd759ed69c57da0670afd9236d229a46e0f9cf519db0cd829c6dca820bb5a5c3def584ed
+  languageName: node
+  linkType: hard
+
+"dat.gui@npm:0.7.5":
+  version: 0.7.5
+  resolution: "dat.gui@npm:0.7.5"
+  checksum: dd500aee177e4bedafcb8ce8b6d404520fc3b2214a99499dcd307adf319ae79fa0aebc8e17912a5e0c38802824e37eafbb8a255aeade61c88b4fb403d7280e1b
   languageName: node
   linkType: hard
 
@@ -595,6 +618,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gl-matrix@npm:*":
+  version: 3.4.3
+  resolution: "gl-matrix@npm:3.4.3"
+  checksum: c47830ba727f3d0fab635c48135af96aef66274079a3e0afd6f68b68c98eae9fc1bcfdc7312fe2301e4fd22dd24c5e0f1b5d025960a208e50d07101ed8d940f9
+  languageName: node
+  linkType: hard
+
+"gl-matrix@npm:3.2.0":
+  version: 3.2.0
+  resolution: "gl-matrix@npm:3.2.0"
+  checksum: 0eaf3db04af45562781cd5c98e05bf3b2ec6b1011de742607fa8cf7b83cacaf065e08060faab090381455c928dea09a9e7669a7014a3689e86861ba3e4202bf4
+  languageName: node
+  linkType: hard
+
 "glob-parent@npm:~5.1.2":
   version: 5.1.2
   resolution: "glob-parent@npm:5.1.2"
@@ -818,12 +855,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "js-bubble@workspace:."
   dependencies:
+    "@types/dat.gui": 0.7.5
+    "@types/gl-matrix": ^3.2.0
     "@types/node": ^18.11.0
+    dat.gui: 0.7.5
+    gl-matrix: 3.2.0
+    lodash: 4.17.11
     sass: ^1.55.0
-    typescript: ^4.6.4
+    typescript: ^4.8.4
     vite: ^3.1.0
   languageName: unknown
   linkType: soft
+
+"lodash@npm:4.17.11":
+  version: 4.17.11
+  resolution: "lodash@npm:4.17.11"
+  checksum: 0611590f43371f1dc93f8ad6d73feab7e301417ff7bbd4f7af4421def41d7b3210230539ae952884a0c7b944ba3266dd2723c02b79f36a7906e8d9e2e280a498
+  languageName: node
+  linkType: hard
 
 "lru-cache@npm:^6.0.0":
   version: 6.0.0
@@ -1349,7 +1398,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.6.4":
+"typescript@npm:^4.8.4":
   version: 4.8.4
   resolution: "typescript@npm:4.8.4"
   bin:
@@ -1359,7 +1408,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.6.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
   resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"
   bin:
