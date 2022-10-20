@@ -99,7 +99,10 @@ export const Mover = function (options: OptionsInterface) {
 
   self.applyForce = function (forceVector) {
     var f = vec2.create();
+    // NOTE: 계산된 힘을 다시 질량으로 나눈다.
     vec2.divide(f, forceVector, vec2.fromValues(self.mass, self.mass));
+
+    // NOTE: 이 계산된 결과 값을 다시 가속도에 넣음으로써, 다음 연산을 위한 초기화를 시켜준다.
     vec2.add(self.acceleration as vec2, self.acceleration as vec2, f);
   };
 
@@ -107,17 +110,29 @@ export const Mover = function (options: OptionsInterface) {
     var constrainMin = typeof isRepelling !== 'undefined' && isRepelling ? 1 : 5;
     var constrainMax = typeof isRepelling !== 'undefined' && isRepelling ? 10000 : 25;
 
+    // NOTE: 상대 메타볼의 x, y에서 현재 x, y를 뺀 것을 f에 놓는다.
     var f = vec2.create();
     vec2.subtract(f, self.location as vec2, mover.location);
+
+    // NOTE: 벡터의 길이를 구한다. 이는 피타고라스의 정리와 같다.
     var d = vec2.length(f);
+
+    // NOTE: constrainMin과 Max 사이에서의 가질 수 있는 d의 최솟값을 구한다.
     d = _constrain(d, constrainMin, constrainMax);
+
+    // NOTE: 모든 힘의 요소를 0~1 사이로 normalization를 시켜준다. (벡터의 각 요소를 벡터의 크기(길이)로 나눠줌.)
     vec2.normalize(f, f);
+
+    // NOTE: mass는 질량에 따른 힘의 가중치를 연산한 수.(size * mover mass multiplier)
+    // 따라서 중력과 질량의 제곱을 벡터의 크기의 제곱으로 나누어, 질량에 따른 속도의 힘을 조정시킨 것을 알 수 있다.
     var strength = self.gravitationalConstant * self.mass * mover.mass / (d * d);
 
     // If we're repelling instead of attracting
     if (typeof isRepelling !== 'undefined' && isRepelling) strength *= -1;
-
+    // f와 새로 구한 힘을 곱한다.
     vec2.multiply(f, f, vec2.fromValues(strength, strength));
+
+    // 조정된 x, y 값을 반환한다.
     return f;
   };
 
@@ -139,7 +154,7 @@ export const Mover = function (options: OptionsInterface) {
 
 
     var target = vec2.clone(circleLoc);
-    vec2.add(target, target, circleOffset);
+    vec2.add(target, target, circleOffset); 
 
     self.seek(target);
   };
@@ -155,10 +170,15 @@ export const Mover = function (options: OptionsInterface) {
     self.applyForce && self.applyForce(steer);
   };
 
+  /**
+   * @descriptions 
+   * 가속도와 속도를 변경시켜 위치를 조정해주는 메서드
+   */
   self.update = function () {
     // If dragging, velocity is zero
     if (self.draggable && (self.draggable as DraggableSelfInterface).isDragging) self.velocity = vec2.fromValues(0, 0);
 
+    // NOTE: 가속도를 속도에 반영해준 후 위치를 변경해준다.
     self.acceleration && vec2.add(self.velocity as vec2, self.velocity as vec2, self.acceleration);
     self.velocity && vec2.add(self.location as vec2, self.location as vec2, self.velocity);
     self.acceleration = vec2.fromValues(0, 0);
@@ -174,17 +194,23 @@ export const Mover = function (options: OptionsInterface) {
   self.checkEdges = function (shouldLoop: boolean) {
     var shouldLoop = typeof shouldLoop !== 'undefined' ? shouldLoop : false;
 
+    // NOTE: 현재 메타볼의 x가 캔버스의 오른쪽을 벗어난다면
     if (self.location && self.location[0] > self.canvasWidth) {
       if (shouldLoop) {
+        // NOTE: 다시 돌아서 왼쪽에서부터 나오도록 한다.
         self.location = vec2.fromValues(0, self.location[1]);
       } else {
         self.location = vec2.fromValues(self.canvasWidth, self.location[1]);
+        // NOTE: 반대쪽으로 가도록 방향을 바꿔준다.
         self.velocity && vec2.multiply(self.velocity, self.velocity, vec2.fromValues(-1, 1));
       }
+    // NOTE: 만약 왼쪽을 벗어났다면
     } else if (self.location && self.location[0] < 0) {
       if (shouldLoop) {
+        // NOTE: 오른쪽에서부터 나ㅇ게 한다.
         self.location = vec2.fromValues(self.canvasWidth, self.location[1]);
       } else {
+        // NOTE: 반대쪽으로 움직이도록 방향 바꿔줌.
         self.velocity && vec2.multiply(self.velocity, self.velocity, vec2.fromValues(-1, 1));
         self.location = vec2.fromValues(0, self.location[1]);
       }
