@@ -1,6 +1,6 @@
 import express from 'express'
 import http from 'http';
-import WebSocket from 'ws';
+import SocketIO from 'socket.io'
 
 const app = express();
 
@@ -10,58 +10,39 @@ app.use("/public", express.static(__dirname + '/public'))
 
 app.get("/", (req, res) => {
   res.render("home")
-})
-
-// app.listen(3000, () => {
-//   console.log("3000 listening...")
-// });
+});
 
 /**
  * express는 socket을 지원하지 않음.
  */
-const server = http.createServer(app);
-
-const wss = new WebSocket.Server({ server });
+const httpServer = http.createServer(app);
+const wsServer = SocketIO(httpServer)
 
 const sockets = [];
 
-// socket: 연결된 상대방
-function handleConnection(socket) {
-  socket.nickname = '익명';
-  
-  sockets.push(socket)
-  console.log("📢 Socket Connected!");
-
-  socket.on("close", () => {
-    console,log("❌ Socket Disconnected!")
+wsServer.on('connection', socket => {
+  socket.onAny((e) => {
+    console.log(`Socket Event: ${e}`)
   })
 
-  socket.on("message", (message) => {
-    const messageUTF8 = JSON.parse(message.toString("utf8"));
+  socket.on('room:enter', (roomName, done) => { 
+    socket.join(roomName)
+    done();
 
-    switch(messageUTF8.type) {
-      case 'message': {
-        sockets.forEach(eachSocket => {
-          eachSocket.send(`${eachSocket.nickname}: ${messageUTF8.payload}`)
-        })
-        return;
-      }
-
-      case 'nickname': {
-        console.log(messageUTF8.payload)
-        socket['nickname'] = messageUTF8.payload;
-        return;
-      }
-
-      default: {
-        return;
-      }
-    }
+    socket.to(roomName).emit("room:welcome");  
   })
-}
 
-wss.on("connection", handleConnection)
+  socket.on('disconnecting', () => {
+    socket.rooms.forEach((room) => {
+      socket.to(room).emit('room:bye'); 
+    })
+  })
 
-server.listen(3000, () => {
-  console.log("3000 listening...")
+  socket.on('room:message', ({msg, roomName}, done) => {
+    socket.to(roomName).emit("room:message", msg);
+    done();
+  })
 })
+
+const handleListen = () => console.log("3000 listening...")
+httpServer.listen(3000, handleListen)

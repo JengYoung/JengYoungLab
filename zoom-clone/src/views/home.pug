@@ -10,11 +10,16 @@ html(lang="en")
     header
       h1 ZOOM
     main
-      form#nickname
-        input(type="text", placeholder="닉네임을 입력해요! 👐🏻", required)
-        button Save
-      ul
-      form#message
-        input(type="text", placeholder="메시지를 입력하세요! 👐🏻", required)
-        button Send
+      div#welcome
+        form
+          input(placeholder="방 이름을 입력하세요!", required, type="text")
+          button 방 입장하기
+
+      div#room
+        h3
+        ul 
+        form
+          input(placeholder="message", required, type="text")
+          button 메시지 전송
+    script(src="/socket.io/socket.io.js")
     script(src="/public/js/app.js")
