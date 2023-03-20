@@ -64,5 +64,6 @@
     "@storybook/react": "^6.3.11",
     "babel-loader": "8.1.0",
     "feather-icons": "^4.28.0"
-  }
+  },
+  "packageManager": "yarn@1.17.0"
 }
