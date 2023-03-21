@@ -10,57 +10,120 @@ const room = $('#room')
 
 room.hidden = true;
 
-function handleMessageSubmit(e, roomName) {
-  e.preventDefault();
 
-  const input = $('input', room);
-  const value = input.value;
-
-  socket.emit('room:message', { msg: input.value, roomName }, () => {
-    addMessage(`You: ${value}`)
-  });
-
-  input.value = "";
+const setRoomHeader = ({ roomName, count }) => {
+  const h3 = $('h3', room)
+  h3.textContent = `🚪 ${roomName} (${count}명)`
 }
-
-function showRoom(roomName) {
+/**
+ * INFO: 방
+ */
+function showRoom({ roomName, count }) {
   welcome.hidden = true;
   room.hidden = false;
 
-  const h3 = $('h3', room)
-  h3.textContent = `🚪 ${roomName}`
+  setRoomHeader({ roomName, count })
 
-  const form = $('form', room);
-  form.addEventListener('submit', (e) => handleMessageSubmit(e, roomName))
+  const msgForm = $('#msg', room);
+  msgForm.addEventListener('submit', (e) => handleMessageSubmit(e, { roomName }))
 }
 
-function addMessage(message) {
-  const ul = room.querySelector("ul");
-  const li = document.createElement('li');
-
-  li.textContent = message;
-  ul.appendChild(li)
-}
-
-function handleRoomSubmit(e) {
+/**
+ * INFO: submit 이벤트
+ */
+function handleMessageSubmit(e, { roomName }) {
   e.preventDefault();
-  
-  const input = $('input', form);
+
+  const input = $('#msg input', room);
   const value = input.value;
 
-  socket.emit("room:enter", input.value, () => showRoom(value))
+  socket.emit('room:message', { msg: input.value, roomName }, addMessage);
 
   input.value = "";
 }
 
-form.addEventListener('submit', handleRoomSubmit)
+function handleNicknameSubmit(e) {
+  e.preventDefault()
 
-socket.on("room:welcome", () => {
-  addMessage('🎉 Someone Joined!')
+  const nicknameInput = $('#nickname input', room)
+  const value = nicknameInput.value;
+
+  socket.emit('room:nickname', value);
+}
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+  
+  const roomInput = $('#room-input');
+  const nicknameInput = $('#nickname-input')
+  
+  const roomName = roomInput.value;
+  const nickname = nicknameInput.value;
+
+  const data = { roomName, nickname }
+
+  socket.emit('room:nickname', nickname);
+  socket.emit("room:enter", data, ({ count }) => showRoom({ roomName, count }))
+
+  roomInput.value = "";
+  nicknameInput.value = "";
+}
+
+
+
+/**
+ * INFO: 메시지
+ */
+function addMessage({ nickname, msg }) {
+
+  const ul = room.querySelector("ul");
+  const li = document.createElement('li');
+  
+  li.textContent = `🙆🏻 ${nickname}: ${msg}`;
+  ul.appendChild(li)
+}
+
+function addBroadcastMessage({ msg }) {
+  const ul = room.querySelector("ul");
+  const li = document.createElement('li');
+  
+  li.textContent = `📢 [알림] ${msg}`;
+  ul.appendChild(li)
+}
+
+
+form.addEventListener('submit', handleFormSubmit)
+
+socket.on("room:welcome", ({ nickname, roomName, count }) => {
+  setRoomHeader({ roomName, count })
+
+  addBroadcastMessage({msg: `🎉 ${nickname}님이 입장하셨어요!`})
 })
 
-socket.on('room:bye', () => {
-  addMessage('👋🏻 Someone Left!')
+socket.on('room:bye', ({ nickname, roomName, count }) => {
+  setRoomHeader({ roomName, count })
+
+  addBroadcastMessage({msg: `👋🏻 ${nickname}님이 방을 나가셨어요!`})
 })
 
-socket.on('room:message', addMessage)
+socket.on('room:message', addMessage);
+
+socket.on('room:change', ({ rooms }) => {
+  const roomList = $('ul', welcome);
+
+  if (!rooms.length) {
+    roomList.innerHTML = "";
+    return;
+  }
+
+  const documentFragment = new DocumentFragment();
+
+  rooms.forEach(room => {
+    const li = document.createElement('li');
+    li.textContent = room;
+
+    documentFragment.appendChild(li);
+  })
+
+  roomList.appendChild(documentFragment);
+});

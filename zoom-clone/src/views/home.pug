@@ -12,13 +12,16 @@ html(lang="en")
     main
       div#welcome
         form
-          input(placeholder="방 이름을 입력하세요!", required, type="text")
+          input(placeholder="방 이름을 입력하세요!", required, type="text")#room-input
+          input(placeholder="nickname", required, type="text")#nickname-input
           button 방 입장하기
+        h4 Open Rooms:
+        ul
 
       div#room
         h3
         ul 
-        form
+        form#msg
           input(placeholder="message", required, type="text")
           button 메시지 전송
     script(src="/socket.io/socket.io.js")
