@@ -11,6 +11,7 @@ const room = $('#room');
 room.hidden = true;
 
 let myPeerConnection;
+let myDataChannel;
 
 const setRoomHeader = ({ roomName, count }) => {
   const h3 = $('h3', room)
@@ -152,7 +153,19 @@ form.addEventListener('submit', handleFormSubmit)
  * track들을 개별적으로 추가시켜주는 함수.
  */
 function makeRTCConnection(myStream, roomName) {
-  myPeerConnection = new RTCPeerConnection();
+  myPeerConnection = new RTCPeerConnection({
+    iceServers: [
+      {
+        urls: [
+          "stun:stun.l.google.com:19302",
+          "stun:stun1.l.google.com:19302",
+          "stun:stun2.l.google.com:19302",
+          "stun:stun3.l.google.com:19302",
+          "stun:stun4.l.google.com:19302",
+        ],
+      },
+    ],
+  });
   
   myPeerConnection.addEventListener('icecandidate', (data) => handleIce(data, roomName));
   myPeerConnection.addEventListener('track', handleAddStream);
@@ -161,11 +174,11 @@ function makeRTCConnection(myStream, roomName) {
 }
 
 function handleIce(data, roomName) {
-  console.log('😎got ICE Candidate', data.candidate);
+  console.log('😎got ICE Candidate');
 
   socket.emit("webrtc:client:ice", { ice: data.candidate, roomName })
 
-  console.log('🧊 sent ICE', data.candidate)
+  console.log('🧊 sent ICE')
 }
 
 function handleAddStream(data) {
@@ -177,6 +190,10 @@ function handleAddStream(data) {
 
 
 socket.on("room:welcome", async ({ nickname, roomName, count }) => {
+  // peer A data channel;
+  myDataChannel = myPeerConnection.createDataChannel('chat');
+  myDataChannel.addEventListener('message', console.log);
+
   const offer = await myPeerConnection.createOffer();
 
   myPeerConnection.setLocalDescription(offer);
@@ -195,6 +212,8 @@ socket.on('room:bye', ({ nickname, roomName, count }) => {
   setRoomHeader({ roomName, count })
 
   addBroadcastMessage({msg: `👋🏻 ${nickname}님이 방을 나가셨어요!`})
+
+  $('#peer-face').srcObject = null;
 })
 
 socket.on('room:message', addMessage);
@@ -222,6 +241,11 @@ socket.on('room:change', ({ rooms }) => {
 
 /* 들어오면 방에 있던 유저가 들아온 사람에게 offer을 제공해줄 거고, 들어온 사람은 정보를 받는다. */
 socket.on("webrtc:server:offer", async ({ offer, roomName }) => {
+  myPeerConnection.addEventListener("datachannel", (e) => {
+    myDataChannel = e.channel;
+    myDataChannel.addEventListener('message', console.log)
+  });
+
   console.log('🙆🏻‍♀️ received offer')
   /**
    * NOTE: 내가 들어오면서 커넥션을 준비하는 동안 이미 상대방의 메시지는 도착하게 될 것.
@@ -244,7 +268,7 @@ socket.on('webrtc:server:answer', ({ answer }) => {
 })
 
 socket.on("webrtc:server:ice", ({ ice }) => {
-  console.log('🧊 received ICE', ice)
+  console.log('🧊 received ICE')
 
   myPeerConnection.addIceCandidate(ice)
 })

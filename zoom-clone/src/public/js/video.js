@@ -30,7 +30,7 @@
  * 서버에서는 answer을 보내줌
  * 클라이언트는 setRemoteDescription();
  * 
- * [ ] 7. IceCandidate 이벤트
+ * [x] 7. IceCandidate 이벤트
  * 이는 인터넷 연결 생성(Internet Connectivity Establishment)을 의미한다.
  * 브라우저가 소통할 수 있게 해주는 방식이며, 어떤 소통 방법이 좋을지 제안할 때 쓴다.
  *  
@@ -43,6 +43,9 @@
  * 
  * 상대방 역시 iceCandidate 이벤트가 발생 시 서버에 전달
  * signaling server가 candidate를 응답하면 클라이언트에선 addICECandidate()
+ * 
+ * [x] Stun Server
+ * @see: https://www.3cx.com/pbx/what-is-a-stun-server/
  */
 
 async function afterCreateMyStream() {
@@ -116,6 +119,7 @@ async function afterCreateMyStream() {
       if (!deviceId) {
         await getCameras()
       }
+
     } catch(e) {
       console.error(e)
     }
@@ -149,14 +153,26 @@ async function afterCreateMyStream() {
   }
 
   const camerasSelect = $('#cameras-select');
+
   async function handleCamerasSelectChange() {
     await getMedia({ deviceId: camerasSelect.value });
+
+    if (myPeerConnection) {
+      const videoTrack = myStream.getVideoTracks()[0]
+      /**
+       * INFO: RTCRtpSender
+       * sender - media stream track을 컨트롤하도록 돕는다.
+       */
+      const videoSender = myPeerConnection.getSenders().find((sender) => sender.track.kind = 'video');
+      console.log(videoSender)
+      videoSender.replaceTrack(videoTrack);
+    }
   }
 
   muteButton.addEventListener('click', handleMuteButtonClick);
   cameraButton.addEventListener('click', handleCameraButtonClick);
   
-  camerasSelect.addEventListener('input', handleCamerasSelectChange);
+  camerasSelect.addEventListener('click', handleCamerasSelectChange);
 
   return myStream;
 }
