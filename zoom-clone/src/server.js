@@ -87,6 +87,21 @@ wsServer.on('connection', socket => {
   socket.on('room:nickname', (nickname) => {
     socket["nickname"] = nickname;
   })
+
+  /**
+   * WebRTC
+   */
+  socket.on('webrtc:sender:offer', ({ offer, roomName }) => {
+    socket.to(roomName).emit('webrtc:server:offer', { offer, roomName });
+  })
+
+  socket.on('webrtc:receiver:answer', ({ answer, roomName }) => {
+    socket.to(roomName).emit('webrtc:server:answer', { answer, roomName });
+  })
+
+  socket.on('webrtc:client:ice', ({ ice, roomName }) => {
+    socket.to(roomName).emit("webrtc:server:ice", { ice });
+  })
 }) 
 
 const handleListen = () => console.log("3000 listening...")
